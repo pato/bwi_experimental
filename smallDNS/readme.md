@@ -25,4 +25,5 @@ Requirements:
 
 Suggested deployment:
 * Run `dnsServer.py` on server
+* Clone repository to robot and edit `pingDNS.sh` setting your server in `sever='localhost'`
 * Set up cron job to execute `pingDNS.sh` at a reasonable interval (example in `crontab.entry`)
