@@ -8,7 +8,7 @@ var connectionConfig = {
 }
 
 $(document).ready(function() {
-  var server = "";
+  var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
   if (server == "") {
     console.log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
     return;
