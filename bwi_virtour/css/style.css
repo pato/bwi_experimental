@@ -42,6 +42,10 @@ body {
 }
 .robot img{
   width: 50%;
+  display: block;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .module{
@@ -49,7 +53,7 @@ body {
   padding-left: 15px;
   margin-top: 20px;
   height:240px;
-  text-align: left;
+  text-align: left
 }
 
 /*** COLORS ***/
