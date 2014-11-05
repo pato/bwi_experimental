@@ -14,8 +14,6 @@ function log(str) {
 }
 
 $(document).ready(function() {
-  // set the log out
-  $(".info textarea").css("width", $(document).width() + "px");
 
   log("Loaded. Starting first connection...");
   var seg = new SegBotConnection("localhost", 9090);
