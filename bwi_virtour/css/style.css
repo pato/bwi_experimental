@@ -18,6 +18,15 @@ body {
 .intro h1{
   font-size: 5em;
 }
+
+.robots {
+  color: white;
+  text-shadow: 1px 1px 0px #000;
+}
+.robots h2 {
+  font-size: 2em;
+  text-align: center;
+}
 .info {
   position: absolute;
   bottom: 0px;
@@ -27,4 +36,87 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+}
+
+.robot {
+}
+.robot img{
+  width: 50%;
+}
+
+.module{
+  text-align: center;
+  padding-left: 15px;
+  margin-top: 20px;
+  height:240px;
+  text-align: left;
+}
+
+/*** COLORS ***/
+
+.orange{
+  color:white;
+  background-color: #FF9C00;
+  -moz-box-shadow: 5px 5px 0px 0px #C47500;
+  -webkit-box-shadow: 5px 5px 0px 0px #C47500;
+  box-shadow: 5px 5px 0px 0px #C47500;
+}
+.red{
+  color:white;
+  background-color: #ED002F;
+  -moz-box-shadow: 5px 5px 0px 0px #B90025;
+  -webkit-box-shadow: 5px 5px 0px 0px #B90025;
+  box-shadow: 5px 5px 0px 0px #B90025;
+}
+.blue{
+  color:white;
+  background-color: #1049A9;
+  -moz-box-shadow: 5px 5px 0px 0px #5B2680;
+  -webkit-box-shadow: 5px 5px 0px 0px #5B2680;
+  box-shadow: 5px 5px 0px 0px #5B2680;
+}
+.green2{
+  color:white;
+  background-color: #006D4F;
+  -moz-box-shadow: 5px 5px 0px 0px #004D37;
+  -webkit-box-shadow: 5px 5px 0px 0px #004D37;
+  box-shadow: 5px 5px 0px 0px #004D37;
+}
+.orange2{
+  color:white;
+  background-color: #A66500;
+  -moz-box-shadow: 5px 5px 0px 0px #804D00;
+  -webkit-box-shadow: 5px 5px 0px 0px #804D00;
+  box-shadow: 5px 5px 0px 0px #804D00;
+}
+.red2{
+  color:white;
+  background-color: #9A001E;
+  -moz-box-shadow: 5px 5px 0px 0px #680015;
+  -webkit-box-shadow: 5px 5px 0px 0px #680015;
+  box-shadow: 5px 5px 0px 0px #680015;
+}
+.green2:hover{
+  color:white;
+  cursor:pointer;
+  background-color: #1F7D63;
+  -moz-box-shadow: 5px 5px 0px 0px #006D4F;
+  -webkit-box-shadow: 5px 5px 0px 0px #006D4F;
+  box-shadow: 5px 5px 0px 0px #006D4F;
+}
+.orange2:hover{
+  color:white;
+  cursor: pointer;
+  background-color: #BF8830;
+  -moz-box-shadow: 5px 5px 0px 0px #A66500;
+  -webkit-box-shadow: 5px 5px 0px 0px #A66500;
+  box-shadow: 5px 5px 0px 0px #A66500;
+}
+.red2:hover{
+  color:white;
+  cursor:pointer;
+  background-color: #B02C4B;
+  -moz-box-shadow: 5px 5px 0px 0px #9A001E;
+  -webkit-box-shadow: 5px 5px 0px 0px #9A001E;
+  box-shadow: 5px 5px 0px 0px #9A001E;
 }
