@@ -14,6 +14,10 @@ function log(str) {
 }
 
 $(document).ready(function() {
+  // set the log out
+  $(".info textarea").css("width", $(document).width() + "px");
+
+  log("Loaded. Starting first connection...");
   var seg = new SegBotConnection("localhost", 9090);
 
   var listener = new ROSLIB.Topic({
@@ -21,10 +25,32 @@ $(document).ready(function() {
     name : '/listener',
     messageType : 'std_msgs/String'
   });
+  log("Added listener");
 
   listener.subscribe(function(message) {
     log('Received message on ' + listener.name + ': ' + message.data);
     listener.unsubscribe();
   });
+  log("Subscribed");
+  
+  var cmdVel = new ROSLIB.Topic({
+    ros : ros,
+    name : '/cmd_vel',
+    messageType : 'geometry_msgs/Twist'
+  });
 
+  var twist = new ROSLIB.Message({
+    linear : {
+      x : 0.1,
+      y : 0.2,
+      z : 0.3
+    },
+    angular : {
+      x : -0.1,
+      y : -0.2,
+      z : -0.3
+    }
+  });
+  cmdVel.publish(twist);
+  log("Published command");
 });

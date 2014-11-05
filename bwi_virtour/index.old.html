@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
     <title>BWI - Virtour</title>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -17,13 +16,21 @@
   </head>
   <body>
     <div class="container">
-      <div class="intro">
-        <h1>Welcome to the GDC Virtual Tour</h1>
-      </div>
-    </div>
+      <h1>Welcome to BWI Virtour</h1>
       <div class="info">
         <textarea type="text" cols="80" rows="7"  name="consoleout" id="consoleout"></textarea>
       </div>
+      <div class="actions">
+        <div class="row">
+          <div class="col-md-2">
+            <button id="connect" class="btn btn-lg btn-primary">Connect</button>
+          </div>
+          <div class="col-md-2">
+            <button id="addListener" class="btn btn-lg">Add Listener</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
