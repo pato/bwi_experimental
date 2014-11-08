@@ -8,18 +8,10 @@ function SegBotConnection(ipaddr, rosbridgeport, mjpegserverport) {
   log("Created new SegBotConnection with " + ipaddr +  ":" + rosbridgeport);
 }
 
-function log(str) {
-  console.log(str);
-  $("#consoleout").append(str + "\n");
-}
 
-$(document).ready(function() {
-
-  log("Loaded. Starting first connection...");
-  var seg = new SegBotConnection("localhost", 9090);
-
+function subscribeListener(ros) {
   var listener = new ROSLIB.Topic({
-    ros : seg.ros,
+    ros : ros,
     name : '/listener',
     messageType : 'std_msgs/String'
   });
@@ -29,8 +21,9 @@ $(document).ready(function() {
     log('Received message on ' + listener.name + ': ' + message.data);
     listener.unsubscribe();
   });
-  log("Subscribed");
-  
+}
+
+function publishTopic(ros) {
   var cmdVel = new ROSLIB.Topic({
     ros : ros,
     name : '/cmd_vel',
@@ -50,5 +43,16 @@ $(document).ready(function() {
     }
   });
   cmdVel.publish(twist);
+}
+
+$(document).ready(function() {
+
+  log("Loaded. Starting first connection...");
+  var seg = new SegBotConnection("localhost", 9090);
+
+  subscribeListener(seg.ros);
+  log("Subscribed");
+  
+  publishTopic(seg.ros);
   log("Published command");
 });
