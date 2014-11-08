@@ -43,6 +43,25 @@ coverage.xml
 .pydevproject
 
 # Rope
+  var cmdVel = new ROSLIB.Topic({
+    ros : ros,
+    name : '/cmd_vel',
+    messageType : 'geometry_msgs/Twist'
+  });
+
+  var twist = new ROSLIB.Message({
+    linear : {
+      x : 0.1,
+      y : 0.2,
+      z : 0.3
+    },
+    angular : {
+      x : -0.1,
+      y : -0.2,
+      z : -0.3
+    }
+  });
+  cmdVel.publish(twist);
 .ropeproject
 
 # Django stuff:
@@ -52,3 +71,7 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
+
+# Vim
+*.swp
+*.swo
