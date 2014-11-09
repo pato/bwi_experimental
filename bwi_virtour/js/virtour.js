@@ -1,4 +1,4 @@
-// constants
+// Constants
 var ROSBRIDGEPORT = 9090;
 var MJPEGSERVERPORT = 8888;
 
@@ -21,7 +21,7 @@ var Segbot = {
   }
 }
 
-// functions
+// Functions
 function createSegbots() {
   segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
 
@@ -33,9 +33,6 @@ function createSegbots() {
   log("Pinging dns server");
   $.getJSON(server, function(data) {
     $.each(data, function(key, val) {
-      //connectionConfig[key] = createConnectionConfig(val, 9090, 8080)
-      //$('#connectionSelect').append('<option value="' + key + '">' + key + '</option>');
-      //alert(key + " : " + val);
       segbots[key] = createSegbot(key, val, ROSBRIDGEPORT, MJPEGSERVERPORT);
     });
   });
@@ -113,6 +110,7 @@ function getHostAddresses() {
   });
 }
 
+// Handlers
 $(document).ready(function() {
   log("Loaded.");
 
@@ -130,4 +128,15 @@ $(document).ready(function() {
   publishTopic(seg.ros);
   log("Published command");
   */
+});
+
+$(".robot").click(function() {
+  var botname = $(this).attr("robot");
+  var segbot = segbots['localhost'];//segbots[botname];
+
+  log("Connecting to: " + botname); 
+  segbot.connect();
+
+  log("Subscribing listener");
+  subscribeListener(segbot.ros);
 });
