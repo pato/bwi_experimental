@@ -4,6 +4,7 @@ var MJPEGSERVERPORT = 8888;
 
 // Globals
 var segbots = {};
+var segbot = null;
 
 // objects
 var Segbot = {
@@ -116,23 +117,11 @@ $(document).ready(function() {
 
   log("Creating segbots");
   createSegbots();
-  /*
-  var seg = new SegBotConnection("localhost", 9090);
-
-  log("Trying to get ip addresses");
-  getHostAddresses();
-
-  subscribeListener(seg.ros);
-  log("Subscribed");
-  
-  publishTopic(seg.ros);
-  log("Published command");
-  */
 });
 
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
-  var segbot = segbots['localhost'];//segbots[botname];
+  segbot = segbots['localhost'];//segbots[botname];
 
   log("Connecting to: " + botname); 
   segbot.connect();
