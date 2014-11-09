@@ -45,10 +45,27 @@ function publishTopic(ros) {
   cmdVel.publish(twist);
 }
 
-$(document).ready(function() {
+function getHostAddresses() {
+  var server = "";
+  if (server == "") {
+    console.log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
+    return;
+  }
+  $.getJSON(server, function(data) {
+    $.each(data, function(key, val) {
+      //connectionConfig[key] = createConnectionConfig(val, 9090, 8080)
+      //$('#connectionSelect').append('<option value="' + key + '">' + key + '</option>');
+      alert(key + " : " + val);
+    });
+  });
+}
 
+$(document).ready(function() {
   log("Loaded. Starting first connection...");
   var seg = new SegBotConnection("localhost", 9090);
+
+  log("Trying to get ip addresses");
+  getHostAddresses();
 
   subscribeListener(seg.ros);
   log("Subscribed");
