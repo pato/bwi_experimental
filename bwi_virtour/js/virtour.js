@@ -48,7 +48,7 @@ function publishTopic(ros) {
 function getHostAddresses() {
   var server = "";
   if (server == "") {
-    console.log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
+    log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
     return;
   }
   $.getJSON(server, function(data) {
