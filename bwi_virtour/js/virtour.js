@@ -1,3 +1,56 @@
+// constants
+var ROSBRIDGEPORT = 9090;
+var MJPEGSERVERPORT = 8888;
+
+// Globals
+var segbots = {};
+
+// objects
+var Segbot = {
+  name : "noname",
+  ipaddr : "0.0.0.0",
+  rosbridgeport : 9090,
+  mjpegserverport : 0,
+  ros : null,
+
+  connect : function() {
+    log("Created connection: " + this.ipaddr + " : " + this.rosbridgeport);
+    this.ros = new ROSLIB.Ros({
+      url : 'ws://' + this.ipaddr + ':' + this.rosbridgeport
+    });
+  }
+}
+
+// functions
+function createSegbots() {
+  segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
+
+  var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
+  if (server == "") {
+    log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
+    return;
+  }
+  log("Pinging dns server");
+  $.getJSON(server, function(data) {
+    $.each(data, function(key, val) {
+      //connectionConfig[key] = createConnectionConfig(val, 9090, 8080)
+      //$('#connectionSelect').append('<option value="' + key + '">' + key + '</option>');
+      //alert(key + " : " + val);
+      segbots[key] = createSegbot(key, val, ROSBRIDGEPORT, MJPEGSERVERPORT);
+    });
+  });
+}
+
+function createSegbot(name, ipaddr, rosbridgeport, mjpegserverport) {
+  var bot = Object.create(Segbot);
+  bot.name = name;
+  bot.ipaddr = ipaddr;
+  bot.rosbridgeport = rosbridgeport;
+  bot.mjpegserverport = mjpegserverport;
+  log("Created segbot: " + name + "(" + ipaddr + ":" + rosbridgeport + ")");
+  return bot;
+}
+
 function SegBotConnection(ipaddr, rosbridgeport, mjpegserverport) {
   this.ipaddr = ipaddr;
   this.rosbridgeport = rosbridgeport;
@@ -46,7 +99,7 @@ function publishTopic(ros) {
 }
 
 function getHostAddresses() {
-  var server = "";
+  var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
   if (server == "") {
     log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
     return;
@@ -61,7 +114,11 @@ function getHostAddresses() {
 }
 
 $(document).ready(function() {
-  log("Loaded. Starting first connection...");
+  log("Loaded.");
+
+  log("Creating segbots");
+  createSegbots();
+  /*
   var seg = new SegBotConnection("localhost", 9090);
 
   log("Trying to get ip addresses");
@@ -72,4 +129,5 @@ $(document).ready(function() {
   
   publishTopic(seg.ros);
   log("Published command");
+  */
 });
