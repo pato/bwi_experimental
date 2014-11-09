@@ -1,6 +1,6 @@
 // Constants
 var ROSBRIDGEPORT = 9090;
-var MJPEGSERVERPORT = 8888;
+var MJPEGSERVERPORT = 8080;
 
 // Globals
 var segbots = {};
@@ -128,4 +128,19 @@ $(".robot").click(function() {
 
   log("Subscribing listener");
   subscribeListener(segbot.ros);
+
+  // hide the intro stuff
+  $(".intro").fadeOut();
+  $(".robots").fadeOut();
+
+  // configure the robot stuff
+  $(".controllingText").text("Controlling " + botname);
+
+  var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
+                      + "/snapshot?topic=/IMAGE_TOPIC";
+  log("Loading video from: " + videoSource);
+  $(".controllingIframe").attr("src", videoSource); 
+  
+  // show the robot stuff
+  $(".control").delay(800).fadeIn();
 });

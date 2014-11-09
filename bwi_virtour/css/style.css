@@ -6,6 +6,7 @@ body {
       -moz-background-size: cover;
       -o-background-size: cover;
       background-size: cover;
+    color: white;
 }
 .intro {
   color: white;
@@ -41,7 +42,7 @@ body {
   padding-top: 10%;
 }
 .robot img{
-  height: 90%;
+  width: 50%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -51,6 +52,10 @@ body {
   padding-left: 15px;
   margin-top: 20px;
   height:240px;
+}
+
+/** Robot control **/
+.controllingIframe{
 }
 
 /*** COLORS ***/
