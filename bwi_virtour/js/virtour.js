@@ -6,6 +6,7 @@ var MJPEGSERVERPORT = 8080;
 var segbots = {};
 var segbot = null;
 var servoCmd = null;
+var servoPos = 0.0; // {-2,2} but locked to {-1,1}
 
 // objects
 var Segbot = {
@@ -139,12 +140,19 @@ $(".robot").click(function() {
     messageType : 'std_msgs/Float32'
   });
   
+  // reset the servo
+  servoCmd.publish(new ROSLIB.Message({data: 0.0}));
+
   // show the robot stuff
   $(".control").delay(800).fadeIn();
 });
 $(".turnLeft").click(function() {
-  servoCmd.publish(new ROSLIB.Message({data: 1.0}));
+  servoPos += 0.2;
+  servoPos = servoPos > 1.0 ? 1.0 : servoPos;
+  servoCmd.publish(new ROSLIB.Message({data: servoPos}));
 });
 $(".turnRight").click(function() {
-  servoCmd.publish(new ROSLIB.Message({data: -1.0}));
+  servoPos -= 0.2;
+  servoPos = servoPos < -1.0 ? -1.0 : servoPos;
+  servoCmd.publish(new ROSLIB.Message({data: servoPos}));
 });
