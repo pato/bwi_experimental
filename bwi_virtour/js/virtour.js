@@ -5,6 +5,7 @@ var MJPEGSERVERPORT = 8080;
 // Globals
 var segbots = {};
 var segbot = null;
+var servoCmd = null;
 
 // objects
 var Segbot = {
@@ -120,16 +121,29 @@ $(".robot").click(function() {
   $(".intro").fadeOut();
   $(".robots").fadeOut();
 
-  // configure the robot stuff
+  // set up title
   $(".controllingText").text("Controlling " + botname);
 
+  // set up video streaming
   var videoTopic = "/nav_kinect/rgb/image_raw";
   var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
                       + "/stream?topic=" + videoTopic;
   log("Loading video from: " + videoSource);
-  //$(".controllingIframe").attr("src", videoSource); 
   $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
+
+  // set up topic for controlling servo
+  servoCmd = new ROSLIB.Topic({
+    ros : segbot.ros,
+    name : '/servo0_cmd',
+    messageType : 'std_msgs/Float32'
+  });
   
   // show the robot stuff
   $(".control").delay(800).fadeIn();
+});
+$(".turnLeft").click(function() {
+  servoCmd.publish(new ROSLIB.Message({data: 1.0}));
+});
+$(".turnRight").click(function() {
+  servoCmd.publish(new ROSLIB.Message({data: -1.0}));
 });
