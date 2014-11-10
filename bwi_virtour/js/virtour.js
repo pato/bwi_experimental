@@ -24,7 +24,7 @@ var Segbot = {
 
 // Functions
 function createSegbots() {
-  segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
+  //segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
 
   var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
   if (server == "") {
@@ -121,7 +121,9 @@ $(document).ready(function() {
 
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
-  segbot = segbots['localhost'];//segbots[botname];
+  segbot = segbots[botname];//segbots['localhost'];//segbots[botname];
+
+  log(segbot);
 
   log("Connecting to: " + botname); 
   segbot.connect();
@@ -136,10 +138,12 @@ $(".robot").click(function() {
   // configure the robot stuff
   $(".controllingText").text("Controlling " + botname);
 
+  var videoTopic = "/nav_kinect/rgb/image_raw";
   var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
-                      + "/snapshot?topic=/IMAGE_TOPIC";
+                      + "/stream?topic=" + videoTopic;
   log("Loading video from: " + videoSource);
-  $(".controllingIframe").attr("src", videoSource); 
+  //$(".controllingIframe").attr("src", videoSource); 
+  $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
   
   // show the robot stuff
   $(".control").delay(800).fadeIn();

@@ -44,14 +44,23 @@
         <h1 class="controllingText">Controlling ${robot}</h1>
         <div class="row-fluid">
           <div class="col-md-12">
-            <iframe class="controllingIframe" width="100%" height="800" src="">video</iframe>
+            <div class="controllingIframe">
+            </div>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <div class="col-md-1 col-md-offset-5">
+            <button class="btn btn-primary">Turn left</button>
+          </div>
+          <div class="col-md-1">
+            <button class="btn btn-primary">Turn right</button>
           </div>
         </div>
       </div>
     </div>
     <div class="info">
       <button type="button" class="showhide btn btn-primary btn-small">Show debug</button>
-      <textarea type="text" cols="80" rows="7"  name="consoleout" id="consoleout"></textarea>
+      <textarea type="text" cols="80" rows="7"  name="consoleout" id="consoleout" readonly></textarea>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
