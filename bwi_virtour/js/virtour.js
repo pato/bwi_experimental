@@ -156,3 +156,14 @@ $(".turnRight").click(function() {
   servoPos = servoPos < -1.0 ? -1.0 : servoPos;
   servoCmd.publish(new ROSLIB.Message({data: servoPos}));
 });
+$(document).keypress(function(e) {
+  if (e.keyCode === 37) {
+    servoPos += 0.2;
+    servoPos = servoPos > 1.0 ? 1.0 : servoPos;
+    servoCmd.publish(new ROSLIB.Message({data: servoPos}));
+  } else if (e.keyCode === 39) {
+    servoPos -= 0.2;
+    servoPos = servoPos < -1.0 ? -1.0 : servoPos;
+    servoCmd.publish(new ROSLIB.Message({data: servoPos}));
+  }
+});
