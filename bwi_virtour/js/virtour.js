@@ -125,7 +125,8 @@ $(".robot").click(function() {
   $(".controllingText").text("Controlling " + botname);
 
   // set up video streaming
-  var videoTopic = "/nav_kinect/rgb/image_raw";
+  //var videoTopic = "/nav_kinect/rgb/image_raw";
+  var videoTopic = "/camera/image_raw";
   var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
                       + "/stream?topic=" + videoTopic;
   log("Loading video from: " + videoSource);
