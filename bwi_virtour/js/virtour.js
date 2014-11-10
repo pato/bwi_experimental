@@ -96,21 +96,6 @@ function publishTopic(ros) {
   cmdVel.publish(twist);
 }
 
-function getHostAddresses() {
-  var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
-  if (server == "") {
-    log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
-    return;
-  }
-  $.getJSON(server, function(data) {
-    $.each(data, function(key, val) {
-      //connectionConfig[key] = createConnectionConfig(val, 9090, 8080)
-      //$('#connectionSelect').append('<option value="' + key + '">' + key + '</option>');
-      alert(key + " : " + val);
-    });
-  });
-}
-
 // Handlers
 $(document).ready(function() {
   log("Loaded.");
