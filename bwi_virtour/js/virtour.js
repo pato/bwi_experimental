@@ -5,8 +5,10 @@ var MJPEGSERVERPORT = 8080;
 // Globals
 var segbots = {};
 var segbot = null;
-var servoCmd = null;
-var servoPos = 0.0; // {-2,2} but locked to {-1,1}
+var servo1Cmd = null;
+var servo2Cmd = null;
+var servo1Pos = 0.0; // {-2,2} but locked to {-1,1}
+var servo2Pos = 0.0;
 
 // objects
 var Segbot = {
@@ -98,6 +100,34 @@ function publishTopic(ros) {
   cmdVel.publish(twist);
 }
 
+function turnLeft() {
+  servo1Pos += 0.2;
+  servo1Pos = servo1Pos > 1.0 ? 1.0 : servo1Pos;
+  servo1Cmd.publish(new ROSLIB.Message({data: servo1Pos}));
+  log(servo1Pos);
+}
+
+function turnRight() {
+  servo1Pos -= 0.2;
+  servo1Pos = servo1Pos < -1.0 ? -1.0 : servo1Pos;
+  servo1Cmd.publish(new ROSLIB.Message({data: servo1Pos}));
+  log(servo1Pos);
+}
+
+function turnUp() {
+  servo2Pos -= 0.2;
+  servo2Pos = servo2Pos < 0.2 ? 0.2 : servo2Pos;
+  servo2Cmd.publish(new ROSLIB.Message({data: servo2Pos}));
+  log(servo2Pos);
+}
+
+function turnDown() {
+  servo2Pos += 0.2;
+  servo2Pos = servo2Pos > 2.0 ? 2.0 : servo2Pos;
+  servo2Cmd.publish(new ROSLIB.Message({data: servo2Pos}));
+  log(servo2Pos);
+}
+
 // Handlers
 $(document).ready(function() {
   log("Loaded.");
@@ -134,36 +164,38 @@ $(".robot").click(function() {
   $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
 
   // set up topic for controlling servo
-  servoCmd = new ROSLIB.Topic({
+  servo1Cmd = new ROSLIB.Topic({
     ros : segbot.ros,
     name : '/servo0_cmd',
     messageType : 'std_msgs/Float32'
   });
+  servo2Cmd = new ROSLIB.Topic({
+    ros : segbot.ros,
+    name : '/servo1_cmd',
+    messageType : 'std_msgs/Float32'
+  });
   
   // reset the servo
-  servoCmd.publish(new ROSLIB.Message({data: 0.0}));
+  servo1Cmd.publish(new ROSLIB.Message({data: 0.0}));
+  servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
 
   // show the robot stuff
   $(".control").delay(800).fadeIn();
 });
 $(".turnLeft").click(function() {
-  servoPos += 0.2;
-  servoPos = servoPos > 1.0 ? 1.0 : servoPos;
-  servoCmd.publish(new ROSLIB.Message({data: servoPos}));
+  turnLeft();
 });
 $(".turnRight").click(function() {
-  servoPos -= 0.2;
-  servoPos = servoPos < -1.0 ? -1.0 : servoPos;
-  servoCmd.publish(new ROSLIB.Message({data: servoPos}));
+  turnRight();
 });
 $(document).keypress(function(e) {
   if (e.keyCode === 37) {
-    servoPos += 0.2;
-    servoPos = servoPos > 1.0 ? 1.0 : servoPos;
-    servoCmd.publish(new ROSLIB.Message({data: servoPos}));
+    turnLeft();
   } else if (e.keyCode === 39) {
-    servoPos -= 0.2;
-    servoPos = servoPos < -1.0 ? -1.0 : servoPos;
-    servoCmd.publish(new ROSLIB.Message({data: servoPos}));
+    turnRight();
+  } else if (e.keyCode === 38) {
+    turnUp();
+  } else if (e.keyCode === 40) {
+    turnDown();
   }
 });
