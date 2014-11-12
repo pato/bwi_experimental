@@ -159,7 +159,7 @@ $(".robot").click(function() {
   //var videoTopic = "/nav_kinect/rgb/image_raw";
   var videoTopic = "/camera/image_raw";
   var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
-                      + "/stream?topic=" + videoTopic;
+                      + "/stream?topic=" + videoTopic + "?invert";
   log("Loading video from: " + videoSource);
   $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
 
