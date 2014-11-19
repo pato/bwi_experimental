@@ -19,10 +19,12 @@ var Segbot = {
   ros : null,
 
   connect : function() {
-    log("Created connection: " + this.ipaddr + " : " + this.rosbridgeport);
+    log("Trying to connect to " + this.ipaddr + " : " + this.rosbridgeport);
     this.ros = new ROSLIB.Ros({
       url : 'ws://' + this.ipaddr + ':' + this.rosbridgeport
     });
+    this.ros.on('error', function(error) { log( error ); });
+    this.ros.on('connection', function() { log('Connection made!'); });
   }
 }
 
@@ -144,11 +146,9 @@ $(document).ready(function() {
 
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
-  segbot = segbots[botname];//segbots['localhost'];//segbots[botname];
+  segbot = segbots[botname];
 
-  log(segbot);
-
-  log("Connecting to: " + botname); 
+  log("Selected: " + botname); 
   segbot.connect();
 
   log("Subscribing listener");
