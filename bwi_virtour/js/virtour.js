@@ -127,6 +127,12 @@ function turnDown() {
   servo2Cmd.publish(new ROSLIB.Message({data: servo2Pos}));
   log(servo2Pos);
 }
+function turnCenter() {
+  servo1Pos = 0.0;
+  servo2Pos = 0.0;
+  servo1Cmd.publish(new ROSLIB.Message({data: 0.0}));
+  servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
+}
 
 // Handlers
 $(document).ready(function() {
@@ -176,18 +182,20 @@ $(".robot").click(function() {
   });
   
   // reset the servo
-  servo1Cmd.publish(new ROSLIB.Message({data: 0.0}));
-  servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
+  turnCenter();
 
   // show the robot stuff
   $(".control").delay(800).fadeIn();
 });
-$(".turnLeft").click(function() {
-  turnLeft();
-});
-$(".turnRight").click(function() {
-  turnRight();
-});
+
+// add callback handlers for buttons
+$(".turnLeft").click(function() {turnLeft();});
+$(".turnRight").click(function() {turnRight();});
+$(".turnUp").click(function() {turnUp();});
+$(".turnDown").click(function() {turnDown();});
+$(".turnCenter").click(function() {turnCenter();});
+
+// map arrow keys to movement
 $(document).keypress(function(e) {
   if (e.keyCode === 37) {
     turnLeft();
