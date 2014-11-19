@@ -48,16 +48,25 @@
             </div>
           </div>
         </div>
-        <div class="row-fluid">
-          <div class="col-md-1 col-md-offset-5">
-            <button class="btn btn-primary turnLeft">Turn left</button>
-          </div>
-          <div class="col-md-1">
-            <button class="btn btn-primary turnRight">Turn right</button>
-          </div>
-        </div>
-      </div>
-    </div>
+        <div class="servoControl">
+          <button class="btn btn-primary turnUp">
+            <span class="glyphicon glyphicon-chevron-up"></span> 
+          </button>
+          <button class="btn btn-primary turnLeft">
+            <span class="glyphicon glyphicon-chevron-left"></span> 
+          </button>
+          <button class="btn btn-primary turnCenter">
+            <span class="glyphicon glyphicon-screenshot"></span>
+          </button>
+          <button class="btn btn-primary turnRight">
+            <span class="glyphicon glyphicon-chevron-right"></span> 
+          </button>
+          <button class="btn btn-primary turnDown">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+          </button>
+        </div> <!-- .servoControl -->
+      </div> <!-- .control -->
+    </div> <!-- .container -->
     <div class="info">
       <button type="button" class="showhide btn btn-primary btn-small">Show debug</button>
       <textarea type="text" cols="80" rows="7"  name="consoleout" id="consoleout" readonly></textarea>

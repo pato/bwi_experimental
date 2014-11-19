@@ -58,6 +58,39 @@ body {
 /** Robot control **/
 .controllingIframe{
 }
+.servoControl{
+  width: 140px;
+  height: 130px;
+  position: relative;
+  left: 15px;
+  top: 670px;
+  background-color: rgba(55,55,55,0.5);
+}
+.servoControl .turnUp{
+  position: absolute;
+  top: 16px;
+  left: 50px;
+}
+.servoControl .turnLeft{
+  position: absolute;
+  top: 50px;
+  left: 10px;
+}
+.servoControl .turnCenter{
+  position: absolute;
+  top: 50px;
+  left: 50px;
+}
+.servoControl .turnRight{
+  position: absolute;
+  top: 50px;
+  left: 90px;
+}
+.servoControl .turnDown{
+  position: absolute;
+  top: 84px;
+  left: 50px;
+}
 
 /*** COLORS ***/
 
