@@ -9,6 +9,7 @@ var servo1Cmd = null;
 var servo2Cmd = null;
 var servo1Pos = 0.0; // {-2,2} but locked to {-1,1}
 var servo2Pos = 0.0;
+var moveBaseAction = null;
 
 // objects
 var Segbot = {
@@ -72,11 +73,24 @@ function subscribeListener(ros) {
     name : '/listener',
     messageType : 'std_msgs/String'
   });
-  log("Added listener");
+  log("Added ping listener");
 
   listener.subscribe(function(message) {
     log('Received message on ' + listener.name + ': ' + message.data);
     listener.unsubscribe();
+  });
+}
+
+function subscribePoseListener(ros) {
+  // setup a listener for the robot pose
+  var poseListener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/amcl_pose',
+    messageType : 'geometry_msgs/PoseWithCovarianceStamped',
+  });
+  log("Added pose listener!");
+  poseListener.subscribe(function(pose) {
+    log("robot.x = " + pose.position.x + " robot.y = " + pose.position.y);
   });
 }
 
@@ -118,7 +132,7 @@ function turnRight() {
 
 function turnUp() {
   servo2Pos -= 0.2;
-  servo2Pos = servo2Pos < 0.2 ? 0.2 : servo2Pos;
+  servo2Pos = servo2Pos < 0.4 ? 0.4 : servo2Pos;
   servo2Cmd.publish(new ROSLIB.Message({data: servo2Pos}));
   log(servo2Pos);
 }
@@ -136,6 +150,26 @@ function turnCenter() {
   servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
 }
 
+function sendGoal(pose) {
+  var goal = new ROSLIB.Goal({
+    actionClient : actionClient,
+    goalMessage : {
+      target_pose : {
+        header : {
+          frame_id : '/map'
+        },
+        pose : pose
+      }
+    }
+  });
+
+  goal.on('result', function(result) {
+    log("move_base result: " + result);
+  });
+  goal.send();
+}
+
+
 // Handlers
 $(document).ready(function() {
   log("Loaded.");
@@ -151,8 +185,9 @@ $(".robot").click(function() {
   log("Selected: " + botname); 
   segbot.connect();
 
-  log("Subscribing listener");
+  log("Subscribing listeners");
   subscribeListener(segbot.ros);
+  subscribePoseListener(segbot.ros);
 
   // hide the intro stuff
   $(".intro").fadeOut();
@@ -180,7 +215,17 @@ $(".robot").click(function() {
     name : '/servo1_cmd',
     messageType : 'std_msgs/Float32'
   });
-  
+
+  // set up actionlib for moving
+  /*
+  moveBaseAction = ROSLIB.ActionClient({
+    ros : segbot.ros,
+    serverName : '/move_base',
+    actionName : 'move_base_msgs/MoveBaseAction'
+  });
+  */
+
+
   // reset the servo
   turnCenter();
 
