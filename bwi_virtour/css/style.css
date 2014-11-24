@@ -91,6 +91,18 @@ body {
   top: 84px;
   left: 50px;
 }
+.labmap{
+  width: 250px;
+  position: relative;
+  left: 890px;
+  top: 541px;
+}
+.labmap .labimage {
+  position: absolute;
+  width: 290px;
+  right: 15px;
+  opacity: 0.5;
+}
 
 /*** COLORS ***/
 
