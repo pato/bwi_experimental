@@ -62,8 +62,8 @@ body {
 .servoControl{
   width: 140px;
   height: 130px;
-  position: relative;
-  left: 15px;
+  position: absolute;
+  left: 0px;
   top: 670px;
   background-color: rgba(55,55,55,0.5);
 }
