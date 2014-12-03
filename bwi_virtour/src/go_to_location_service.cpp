@@ -7,15 +7,29 @@ typedef actionlib::SimpleActionClient<bwi_kr_execution::ExecutePlanAction> Clien
 
 using namespace std;
 
+bool goToLocation(bwi_virtour::GoToLocation::Request &req,
+    bwi_virtour::GoToLocation::Response &res) {
+  ROS_INFO("requesting goToLocation: %s", req.location.c_str());
+  res.result = 1;
+  ROS_INFO("sending back response: [%ld]", (long int)res.result);
+  return true;
+}
+    
+
 int main(int argc, char**argv) {
-  ros::init(argc, argv, "go_to_location_node");
+  ros::init(argc, argv, "go_to_location_service_node");
   ros::NodeHandle n;
   
-  ros::NodeHandle privateNode("~");
-  string location;
-  privateNode.param<string>("location",location,"l3_414b");
+  string location = "l3_414b";
+
+  ros::ServiceServer service = n.advertiseService("go_to_location", goToLocation);
+  ROS_INFO("GoToLocation Service Started");
+  ros::spin();
+  ROS_INFO("Done spinning");
   
   ROS_INFO_STREAM("going to " << location);
+
+  return 0;
   
   Client client("/action_executor/execute_plan", true);
   client.waitForServer();

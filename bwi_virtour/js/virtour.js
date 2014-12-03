@@ -10,6 +10,7 @@ var servo2Cmd = null;
 var servo1Pos = 0.0; // {-2,2} but locked to {-1,1}
 var servo2Pos = 0.0;
 var moveBaseAction = null;
+var goToLocationClient = null;
 
 // objects
 var Segbot = {
@@ -31,7 +32,7 @@ var Segbot = {
 
 // Functions
 function createSegbots() {
-  //segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
+  segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
 
   var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
   if (server == "") {
@@ -153,7 +154,6 @@ function showMap() {
   log("Showing map");
   $(".map-modal").modal();
 }
-
 function sendGoal(pose) {
   var goal = new ROSLIB.Goal({
     actionClient : moveBaseAction,
@@ -172,6 +172,13 @@ function sendGoal(pose) {
   });
   goal.send();
 }
+function requestLocation(locationStr) {
+  var request = new ROSLIB.ServiceRequest({ location: locationStr});
+  goToLocationClient.callService(request, function(result) {
+    log('Result for requestLocation service call on '
+      + goToLocationClient.name + ': ' + result.result);
+  });
+}
 
 
 // Handlers
@@ -184,7 +191,7 @@ $(document).ready(function() {
 
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
-  segbot = segbots[botname];
+  segbot = segbots['localhost'];//segbots[botname];
 
   log("Selected: " + botname); 
   segbot.connect();
@@ -225,6 +232,13 @@ $(".robot").click(function() {
     ros : segbot.ros,
     serverName : '/move_base',
     actionName : 'move_base_msgs/MoveBaseAction'
+  });
+
+  // set up service client for sending commands
+  goToLocationClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/go_to_location',
+    serviceType : 'bwi_virtour/GoToLocation'
   });
 
 //  var pose = ROSLIB.Pose({position : { x : 1, y : 1 }});
