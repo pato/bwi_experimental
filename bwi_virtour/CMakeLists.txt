@@ -102,7 +102,7 @@ include_directories(
 #   src/${PROJECT_NAME}/bwi_virtour.cpp
 # )
 
-add_executable(go_to_location_service_node ./nodes/go_to_location_service.cpp)
+add_executable(go_to_location_service_node src/go_to_location_service.cpp)
 add_dependencies(go_to_location_service_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(go_to_location_service_node ${catkin_LIBRARIES})
 
