@@ -1,6 +1,7 @@
 #include "bwi_kr_execution/ExecutePlanAction.h"
 #include <actionlib/client/simple_action_client.h>
 #include <ros/ros.h>
+#include "bwi_virtour/GoToLocation.h"
 
 typedef actionlib::SimpleActionClient<bwi_kr_execution::ExecutePlanAction> Client;
 
