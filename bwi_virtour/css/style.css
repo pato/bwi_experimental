@@ -105,6 +105,9 @@ body {
   right: 15px;
   opacity: 0.5;
 }
+.labmap .labimage:hover {
+  cursor: pointer;
+}
 
 .map-modal {
   color: black;
