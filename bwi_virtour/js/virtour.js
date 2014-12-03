@@ -149,14 +149,18 @@ function turnCenter() {
   servo1Cmd.publish(new ROSLIB.Message({data: 0.0}));
   servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
 }
+function showMap() {
+  log("Showing map");
+  $(".map-modal").modal();
+}
 
 function sendGoal(pose) {
   var goal = new ROSLIB.Goal({
-    actionClient : actionClient,
+    actionClient : moveBaseAction,
     goalMessage : {
       target_pose : {
         header : {
-          frame_id : '/map'
+          frame_id : '/base_footprint'
         },
         pose : pose
       }
@@ -217,13 +221,14 @@ $(".robot").click(function() {
   });
 
   // set up actionlib for moving
-  /*
   moveBaseAction = ROSLIB.ActionClient({
     ros : segbot.ros,
     serverName : '/move_base',
     actionName : 'move_base_msgs/MoveBaseAction'
   });
-  */
+
+//  var pose = ROSLIB.Pose({position : { x : 1, y : 1 }});
+//  sendGoal(pose);
 
 
   // reset the servo
@@ -239,6 +244,7 @@ $(".turnRight").click(function() {turnRight();});
 $(".turnUp").click(function() {turnUp();});
 $(".turnDown").click(function() {turnDown();});
 $(".turnCenter").click(function() {turnCenter();});
+$(".labimage").click(function() {showMap();});
 
 // map arrow keys to movement
 $(document).keypress(function(e) {

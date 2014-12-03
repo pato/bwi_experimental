@@ -93,16 +93,26 @@ body {
   left: 50px;
 }
 .labmap{
-  width: 250px;
+  min-width: 250px;
   position: absolute;
   right: -15px;
-  bottom: 120px;
+  bottom: 110px;
 }
 .labmap .labimage {
   position: absolute;
-  height: 120px;
+  height: auto;
+  width: 100%;
   right: 15px;
   opacity: 0.5;
+}
+
+.map-modal {
+  color: black;
+}
+
+.map-modal .modal-img {
+  width: 100%;
+  padding-bottom: 50px;
 }
 
 /*** COLORS ***/
