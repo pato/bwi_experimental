@@ -4,7 +4,10 @@ project(bwi_virtour)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS 
+  std_msgs
+  actionlib
+)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -89,11 +92,18 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+)
 
 ## Declare a cpp library
 # add_library(bwi_virtour
 #   src/${PROJECT_NAME}/bwi_virtour.cpp
 # )
+
+add_executable(go_to_location_service_node ./nodes/go_to_location_service.cpp)
+add_dependencies(go_to_location_service_node ${catkin_EXPORTED_TARGETS})
+target_link_libraries(go_to_location_service_node ${catkin_LIBRARIES})
 
 ## Declare a cpp executable
 # add_executable(bwi_virtour_node src/bwi_virtour_node.cpp)
