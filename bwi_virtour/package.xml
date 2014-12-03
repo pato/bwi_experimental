@@ -1,0 +1,9 @@
+<package>
+  <name>bwi_virtour</name>
+  <version>0.8</version>
+  <description>
+    This package provides the local launch files for the robots, as well as the web interface for the BWI GDC virtual tour project
+  </description>
+  <maintainer email="pato@cs.utexas.edu">Pato Lankenau</maintainer>
+  <license>BSD</license>
+</package>
