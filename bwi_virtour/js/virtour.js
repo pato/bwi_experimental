@@ -173,6 +173,7 @@ function sendGoal(pose) {
   goal.send();
 }
 function requestLocation(locationStr) {
+  log('requesting goToLocation: ' + locationStr);
   var request = new ROSLIB.ServiceRequest({ location: locationStr});
   goToLocationClient.callService(request, function(result) {
     log('Result for requestLocation service call on '
