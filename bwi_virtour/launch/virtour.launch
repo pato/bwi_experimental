@@ -4,5 +4,5 @@
   <node name="mjpeg_server" pkg="mjpeg_server" type="mjpeg_server">
     <param name="__image_transport" value="compressed" />
   </node>
-  <node name="polulu_maestro_node" pkg="pololu_maestro" />
+  <node name="polulu_maestro_node" pkg="pololu_maestro" type="polulu_maestro_node" />
 </launch>
