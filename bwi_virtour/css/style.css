@@ -109,7 +109,7 @@ body {
   cursor: pointer;
 }
 
-.map-modal {
+.map-modal, .error-modal{
   color: black;
 }
 
