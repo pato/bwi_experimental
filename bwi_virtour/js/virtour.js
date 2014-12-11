@@ -210,8 +210,14 @@ $(".robot").click(function() {
   $(".controllingText").text("Controlling " + botname);
 
   // set up video streaming
-  //var videoTopic = "/nav_kinect/rgb/image_raw";
-  var videoTopic = "/camera/image_raw";
+  var videoTopic = "";
+  if (botname == "calculon") {
+    videoTopic = "/camera/image_raw";
+    log("Using /camera/image_raw for video source");
+  } else {
+    videoTopic = "/nav_kinect/rgb/image_raw";
+    log("Using /nav_kinect/rgb/image_raw for video source");
+  }
   var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
                       + "/stream?topic=" + videoTopic + "?invert";
   log("Loading video from: " + videoSource);
