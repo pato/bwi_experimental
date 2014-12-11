@@ -41,8 +41,12 @@ var Segbot = {
     this.ros = new ROSLIB.Ros({
       url : 'ws://' + this.ipaddr + ':' + this.rosbridgeport
     });
-    this.ros.on('error', function(error) { log( error ); });
     this.ros.on('connection', function() { log('Connection made!'); });
+    this.ros.on('error', function(error) {
+      log("Connection failed!");
+      log(error);
+      error("Connection to "  + name + " failed!");
+    });
   }
 }
 
@@ -52,7 +56,7 @@ function createSegbots() {
 
   var server = "http://nixons-head.csres.utexas.edu:7979/hostsjson";
   if (server == "") {
-    log("Warning: No DNS server set, will not be able to dynamically load robot's IP addresses");
+    error("Will not be able to dynamically load robot's IP addresses","Error: No DNS server set");
     return;
   }
   log("Pinging dns server");
@@ -60,7 +64,8 @@ function createSegbots() {
     $.each(data, function(key, val) {
       segbots[key] = createSegbot(key, val, ROSBRIDGEPORT, MJPEGSERVERPORT);
     });
-  });
+  })
+  .error(function(err) { error("Failed to ping DNS server"); });
 }
 
 function createSegbot(name, ipaddr, rosbridgeport, mjpegserverport) {
@@ -206,6 +211,13 @@ function requestLocation(locationStr) {
   });
 }
 
+function error(errorMessage, errorTitle = "Oops! This is embarassing") {
+  $("#errorTitle").text(errorTitle);
+  $("#errorBody").text(errorMessage);
+  $(".error-modal").modal();
+  log("error: "+errorMessage);
+}
+
 
 // Handlers
 $(document).ready(function() {
@@ -298,6 +310,11 @@ $(".labimage").click(function() {showMap();});
 $(".navigateBtn").click(function() {
   var location = $("#locationSelect").val();
   log("navigating to " + location);
+});
+
+$(".reloadBtn").click(function() {
+  log("reloading page");
+  location.reload();
 });
 
 // map arrow keys to movement
