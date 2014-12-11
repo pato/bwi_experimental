@@ -42,15 +42,22 @@ var Segbot = {
       url : 'ws://' + this.ipaddr + ':' + this.rosbridgeport
     });
     this.ros.on('connection', function() { log('Connection made!'); });
-    this.ros.on('error', function(error) {
+    this.ros.on('error', function(err) {
       log("Connection failed!");
-      log(error);
-      error("Connection to "  + name + " failed!");
+      log(err);
+      error("Connection to "  + this.name + " failed!");
     });
   }
 }
 
 // Functions
+function error(errorMessage, errorTitle = "Oops! This is embarassing") {
+  $("#errorTitle").text(errorTitle);
+  $("#errorBody").text(errorMessage);
+  $(".error-modal").modal();
+  log("error: "+errorMessage);
+}
+
 function createSegbots() {
   segbots["localhost"] = createSegbot("localhost", "127.0.0.1", ROSBRIDGEPORT, MJPEGSERVERPORT);
 
@@ -180,10 +187,12 @@ function turnCenter() {
   servo1Cmd.publish(new ROSLIB.Message({data: 0.0}));
   servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
 }
+
 function showMap() {
   log("Showing map");
   $(".map-modal").modal();
 }
+
 function sendGoal(pose) {
   var goal = new ROSLIB.Goal({
     actionClient : moveBaseAction,
@@ -202,6 +211,7 @@ function sendGoal(pose) {
   });
   goal.send();
 }
+
 function requestLocation(locationStr) {
   log('requesting goToLocation: ' + locationStr);
   var request = new ROSLIB.ServiceRequest({ location: locationStr});
@@ -211,12 +221,6 @@ function requestLocation(locationStr) {
   });
 }
 
-function error(errorMessage, errorTitle = "Oops! This is embarassing") {
-  $("#errorTitle").text(errorTitle);
-  $("#errorBody").text(errorMessage);
-  $(".error-modal").modal();
-  log("error: "+errorMessage);
-}
 
 
 // Handlers
