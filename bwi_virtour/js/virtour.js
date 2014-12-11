@@ -12,6 +12,22 @@ var servo2Pos = 0.0;
 var moveBaseAction = null;
 var goToLocationClient = null;
 
+var locations = [{
+  name: "Matteo's Office",
+  value: "l3_418"
+},{
+  name: "Shiqui's Office",
+  value: "l3_414"
+},{
+  name: "Peter's Office",
+  value: "l3_415"
+},{
+  name: "Lab",
+  value: "l3_411"
+}];
+
+
+
 // objects
 var Segbot = {
   name : "noname",
@@ -65,6 +81,15 @@ function SegBotConnection(ipaddr, rosbridgeport, mjpegserverport) {
     url : 'ws://' + ipaddr + ':' + rosbridgeport
   });
   log("Created new SegBotConnection with " + ipaddr +  ":" + rosbridgeport);
+}
+
+function populateLocations() {
+  $(locations).each(function(i, val) {
+    $('#locationSelect').append($('<option>', {
+      value: val.value,
+      text: val.name
+    }));
+  });
 }
 
 
@@ -188,6 +213,8 @@ $(document).ready(function() {
 
   log("Creating segbots");
   createSegbots();
+
+  populateLocations();
 });
 
 $(".robot").click(function() {
@@ -235,14 +262,14 @@ $(".robot").click(function() {
     messageType : 'std_msgs/Float32'
   });
 
-  // set up actionlib for moving
+  // set up actionlib for teleop moving
   moveBaseAction = ROSLIB.ActionClient({
     ros : segbot.ros,
     serverName : '/move_base',
     actionName : 'move_base_msgs/MoveBaseAction'
   });
 
-  // set up service client for sending commands
+  // set up service client for sending location commands
   goToLocationClient = new ROSLIB.Service({
     ros : segbot.ros,
     name : '/go_to_location',
@@ -251,7 +278,6 @@ $(".robot").click(function() {
 
 //  var pose = ROSLIB.Pose({position : { x : 1, y : 1 }});
 //  sendGoal(pose);
-
 
   // reset the servo
   turnCenter();
@@ -267,6 +293,12 @@ $(".turnUp").click(function() {turnUp();});
 $(".turnDown").click(function() {turnDown();});
 $(".turnCenter").click(function() {turnCenter();});
 $(".labimage").click(function() {showMap();});
+
+// add callback handlers for navigate form
+$(".navigateBtn").click(function() {
+  var location = $("#locationSelect").val();
+  log("navigating to " + location);
+});
 
 // map arrow keys to movement
 $(document).keypress(function(e) {
