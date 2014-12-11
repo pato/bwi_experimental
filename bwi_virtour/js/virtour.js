@@ -158,34 +158,36 @@ function turnLeft() {
   servo1Pos += 0.2;
   servo1Pos = servo1Pos > 1.0 ? 1.0 : servo1Pos;
   servo1Cmd.publish(new ROSLIB.Message({data: servo1Pos}));
-  log(servo1Pos);
+  log("Servo1: " + servo1Pos);
 }
 
 function turnRight() {
   servo1Pos -= 0.2;
   servo1Pos = servo1Pos < -1.0 ? -1.0 : servo1Pos;
   servo1Cmd.publish(new ROSLIB.Message({data: servo1Pos}));
-  log(servo1Pos);
+  log("Servo1: " + servo1Pos);
 }
 
 function turnUp() {
   servo2Pos -= 0.2;
   servo2Pos = servo2Pos < 0.4 ? 0.4 : servo2Pos;
   servo2Cmd.publish(new ROSLIB.Message({data: servo2Pos}));
-  log(servo2Pos);
+  log("Servo2: " + servo2Pos);
 }
 
 function turnDown() {
   servo2Pos += 0.2;
   servo2Pos = servo2Pos > 2.0 ? 2.0 : servo2Pos;
   servo2Cmd.publish(new ROSLIB.Message({data: servo2Pos}));
-  log(servo2Pos);
+  log("Servo2: " + servo2Pos);
 }
 function turnCenter() {
   servo1Pos = 0.0;
   servo2Pos = 0.0;
   servo1Cmd.publish(new ROSLIB.Message({data: 0.0}));
   servo2Cmd.publish(new ROSLIB.Message({data: 1.0}));
+  log("Servo1: " + servo1Pos);
+  log("Servo2: " + servo2Pos);
 }
 
 function showMap() {
