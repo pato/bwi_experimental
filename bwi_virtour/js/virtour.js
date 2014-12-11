@@ -315,7 +315,8 @@ $(".labimage").click(function() {showMap();});
 // add callback handlers for navigate form
 $(".navigateBtn").click(function() {
   var location = $("#locationSelect").val();
-  log("navigating to " + location);
+  log("Requesting navigation to " + location);
+  requestLocation(location);
 });
 
 $(".reloadBtn").click(function() {
