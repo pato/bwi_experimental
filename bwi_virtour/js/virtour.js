@@ -45,7 +45,7 @@ var Segbot = {
     this.ros.on('error', function(err) {
       log("Connection failed!");
       log(err);
-      error("Connection to "  + this.name + " failed!");
+      error("Connection to segbot failed!");
     });
   }
 }
