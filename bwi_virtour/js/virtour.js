@@ -16,7 +16,7 @@ var locations = [{
   name: "Matteo's Office",
   value: "l3_418"
 },{
-  name: "Shiqui's Office",
+  name: "Shiqi's Office",
   value: "l3_414"
 },{
   name: "Peter's Office",
