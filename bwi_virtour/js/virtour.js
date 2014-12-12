@@ -71,8 +71,7 @@ function createSegbots() {
     $.each(data, function(key, val) {
       segbots[key] = createSegbot(key, val, ROSBRIDGEPORT, MJPEGSERVERPORT);
     });
-  })
-  .error(function(err) { error("Failed to ping DNS server"); });
+  }).error(function(err) { error("Failed to ping DNS server"); });
 }
 
 function createSegbot(name, ipaddr, rosbridgeport, mjpegserverport) {
@@ -152,6 +151,14 @@ function publishTopic(ros) {
     }
   });
   cmdVel.publish(twist);
+}
+
+function rotateLeft() {
+  log("Rotate left");
+}
+
+function rotateRight() {
+  log("Rotate right");
 }
 
 function turnLeft() {
@@ -311,6 +318,8 @@ $(".turnUp").click(function() {turnUp();});
 $(".turnDown").click(function() {turnDown();});
 $(".turnCenter").click(function() {turnCenter();});
 $(".labimage").click(function() {showMap();});
+$(".rotateRight").click(function() {rotateRight();});
+$(".rotateLeft").click(function() {rotateLeft();});
 
 // add callback handlers for navigate form
 $(".navigateBtn").click(function() {
