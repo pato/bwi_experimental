@@ -59,6 +59,24 @@ body {
 .controllingIframe{
   position:relative;
 }
+.rotateControl{
+  width: 140px;
+  height: 40px;
+  position: absolute;
+  left: 0px;
+  top: 625px;
+  background-color: rgba(55,55,55,0.5);
+}
+.rotateControl .rotateLeft{
+  position: absolute;
+  top: 2px;
+  left: 17px;
+}
+.rotateControl .rotateRight{
+  position: absolute;
+  top: 2px;
+  right: 17px;
+}
 .servoControl{
   width: 140px;
   height: 130px;
