@@ -11,6 +11,7 @@ var servo1Pos = 0.0; // {-2,2} but locked to {-1,1}
 var servo2Pos = 0.0;
 var moveBaseAction = null;
 var goToLocationClient = null;
+var rotateClient = null;
 
 var locations = [{
   name: "Matteo's Office",
@@ -155,10 +156,12 @@ function publishTopic(ros) {
 
 function rotateLeft() {
   log("Rotate left");
+  requestRotate(-5);
 }
 
 function rotateRight() {
   log("Rotate right");
+  requestRotate(5);
 }
 
 function turnLeft() {
@@ -230,6 +233,14 @@ function requestLocation(locationStr) {
   });
 }
 
+function requestRotate(rotateDelta) {
+  log('requesting rotate: ' + rotateDelta);
+  var request = new ROSLIB.ServiceRequest({ rotateDelta: rotateDelta});
+  rotateClient.callService(request, function(result) {
+    log('Result for requestRotate service call on '
+      + rotateClient.name + ': ' + result.result);
+  });
+}
 
 
 // Handlers
@@ -245,7 +256,7 @@ $(document).ready(function() {
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
   segbot = segbots['localhost'];
-  segbot = segbots[botname];
+  //segbot = segbots[botname];
 
   log("Selected: " + botname); 
   segbot.connect();
@@ -299,6 +310,13 @@ $(".robot").click(function() {
     ros : segbot.ros,
     name : '/go_to_location',
     serviceType : 'bwi_virtour/GoToLocation'
+  });
+
+  // set up service client for sending location commands
+  rotateClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/rotate',
+    serviceType : 'bwi_virtour/Rotate'
   });
 
 //  var pose = ROSLIB.Pose({position : { x : 1, y : 1 }});
