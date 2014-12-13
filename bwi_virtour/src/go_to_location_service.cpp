@@ -14,6 +14,8 @@ bool goToLocation(bwi_virtour::GoToLocation::Request &req,
   ROS_INFO("requesting goToLocation: %s", req.location.c_str());
   ROS_INFO("im alive");
 
+  /* TODO: check the request against whitelisted locations */
+
   ROS_INFO("waiting for server");
   client->waitForServer();
   
