@@ -275,13 +275,14 @@ $(".robot").click(function() {
   var videoTopic = "";
   if (botname == "calculon") {
     videoTopic = "/camera/image_raw";
+    videoTopic += "?invert";
     log("Using /camera/image_raw for video source");
   } else {
     videoTopic = "/nav_kinect/rgb/image_raw";
     log("Using /nav_kinect/rgb/image_raw for video source");
   }
   var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
-                      + "/stream?topic=" + videoTopic + "?invert";
+                      + "/stream?topic=" + videoTopic;
   log("Loading video from: " + videoSource);
   $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
 
