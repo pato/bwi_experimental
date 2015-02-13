@@ -255,8 +255,7 @@ $(document).ready(function() {
 
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
-  segbot = segbots['localhost'];
-  //segbot = segbots[botname];
+  segbot = segbots[botname];
 
   log("Selected: " + botname); 
   segbot.connect();
