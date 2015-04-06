@@ -58,6 +58,7 @@ add_service_files(
   Rotate.srv
   RequestTour.srv
   PingTour.srv
+  GetTourState.srv
 )
 
 ## Generate actions in the 'action' folder
