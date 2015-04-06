@@ -1,5 +1,6 @@
 #include "tourManager.h"
 #include "bwi_virtour/RequestTour.h"
+#include "bwi_virtour/PingTour.h"
 
 TourManager* tm;
 
@@ -25,6 +26,18 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
   return true;
 }
 
+bool pingTour(bwi_virtour::PingTour::Request &req,
+    bwi_virtour::PingTour::Response &res) {
+
+  if (req.user.compare(tm->tourLeader) == 0) {
+    tm-> lastPingTime = ros::Time::now();
+    res.result = 1;
+  } else {
+    res.result = TourManager::ERROR_NOTTOURLEADER;
+  }
+  return true;
+}
+
 int main(int argc, char **argv){
   tm = new TourManager(true);
 
@@ -32,7 +45,8 @@ int main(int argc, char **argv){
   ros::NodeHandle n;
 
   /* Advertise services */
-  ros::ServiceServer service = n.advertiseService("request_tour", requestTour);
+  ros::ServiceServer request_service = n.advertiseService("request_tour", requestTour);
+  ros::ServiceServer ping_service = n.advertiseService("ping_tour", pingTour);
 
   ros::spin();
   return 0;
