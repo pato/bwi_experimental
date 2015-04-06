@@ -127,13 +127,21 @@ body {
   cursor: pointer;
 }
 
+.pos-map{
+  position:relative;
+}
+
+.pos-marker{
+  position: absolute;
+  height: 30px;
+}
+
 .map-modal, .error-modal{
   color: black;
 }
 
 .map-modal .modal-img {
   width: 100%;
-  padding-bottom: 50px;
 }
 
 /*** COLORS ***/

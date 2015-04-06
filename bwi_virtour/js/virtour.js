@@ -13,6 +13,14 @@ var moveBaseAction = null;
 var goToLocationClient = null;
 var rotateClient = null;
 
+// Map conversions
+var map_res = 0.05;
+var map_origin_x = -60.45;
+var map_origin_y = -23.4;
+var map_width = 1857;
+var map_height = 573;
+var map_marker_offset = 15; //half of image width
+
 var locations = [{
   name: "Matteo's Office",
   value: "l3_418"
@@ -128,8 +136,21 @@ function subscribePoseListener(ros) {
   });
   log("Added pose listener!");
   poseListener.subscribe(function(pose) {
-    log("robot.x = " + pose.position.x + " robot.y = " + pose.position.y);
+    x = pose.pose.pose.position.x;
+    y = pose.pose.pose.position.y;
+    updatePosition(x,y);
   });
+}
+
+function updatePosition(x, y){
+  log("robot.x = " + x + " robot.y = " + y);
+  xp = 100 * (x / map_res + map_origin_x + map_marker_offset) / map_width;
+  yp = 100 * (y / map_res + map_origin_y + map_marker_offset) / map_height;
+  yp = 100 - yp;
+  //yp = yp - 20;
+  //yp = yp - 15; // offset for height of image and for css position
+  $(".pos-marker").css("left", xp + "%");
+  $(".pos-marker").css("top", yp + "%");
 }
 
 function publishTopic(ros) {
@@ -230,6 +251,18 @@ function requestLocation(locationStr) {
   goToLocationClient.callService(request, function(result) {
     log('Result for requestLocation service call on '
       + goToLocationClient.name + ': ' + result.result);
+    if (result.result == 1) { //success
+      alert("success");
+    } else if (result.result == -1) { // terminated
+
+    } else if (result.result == -2) { // preempted
+
+    } else if (result.result == -3) { // aborted
+      alert("aborted");
+
+    } else {
+
+    }
   });
 }
 
@@ -344,6 +377,7 @@ $(".navigateBtn").click(function() {
   var location = $("#locationSelect").val();
   log("Requesting navigation to " + location);
   requestLocation(location);
+  $(".map-modal").modal("hide");
 });
 
 $(".reloadBtn").click(function() {
