@@ -56,6 +56,7 @@ add_service_files(
   FILES
   GoToLocation.srv
   Rotate.srv
+  RequestTour.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -110,6 +111,10 @@ target_link_libraries(go_to_location_service_node ${catkin_LIBRARIES})
 add_executable(rotate_service_node src/rotate_service.cpp)
 add_dependencies(rotate_service_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(rotate_service_node ${catkin_LIBRARIES})
+
+add_executable(tour_manager src/tourManager.cpp)
+add_dependencies(tour_manager ${catkin_EXPORTED_TARGETS})
+target_link_libraries(tour_manager ${catkin_LIBRARIES})
 
 ## Declare a cpp executable
 # add_executable(bwi_virtour_node src/bwi_virtour_node.cpp)
