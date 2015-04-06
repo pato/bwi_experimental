@@ -59,8 +59,9 @@ int main(int argc, char **argv){
   ros::NodeHandle n;
 
   /* Advertise services */
-  ros::ServiceServer request_service = n.advertiseService("request_tour", requestTour);
-  ros::ServiceServer ping_service = n.advertiseService("ping_tour", pingTour);
+  ros::ServiceServer request_service = n.advertiseService("tourManager/request_tour", requestTour);
+  ros::ServiceServer ping_service = n.advertiseService("tourManager/ping_tour", pingTour);
+  ros::ServiceServer get_tour_state_service= n.advertiseService("tourManager/get_tour_state", getTourState);
 
   ros::spin();
   return 0;
