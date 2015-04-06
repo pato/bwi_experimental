@@ -1,6 +1,7 @@
 #include "tourManager.h"
 #include "bwi_virtour/RequestTour.h"
 #include "bwi_virtour/PingTour.h"
+#include "bwi_virtour/GetTourState.h"
 
 TourManager* tm;
 
@@ -35,6 +36,19 @@ bool pingTour(bwi_virtour::PingTour::Request &req,
   } else {
     res.result = TourManager::ERROR_NOTTOURLEADER;
   }
+  return true;
+}
+
+bool getTourState(bwi_virtour::GetTourState::Request &req,
+    bwi_virtour::GetTourState::Response &res) {
+
+  res.tourAllowed = tm->tourAllowed;
+  res.tourInProgress = tm->tourInProgress;
+  res.tourDuration = tm->tourDuration;
+  res.tourStartTime = tm->tourStartTime.toSec();
+  res.lastPingTime = tm->lastPingTime.toSec();
+  res.tourLeader = tm->tourLeader;
+
   return true;
 }
 
