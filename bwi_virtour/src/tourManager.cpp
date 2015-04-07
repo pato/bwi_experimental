@@ -15,6 +15,7 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
       tm->tourLeader = req.user;
       tm->tourInProgress = true;
       tm->tourStartTime = ros::Time::now();
+      res.startTime = tm->tourStartTime.toSec();
       res.result = tm->tourDuration;
 
     } else {
