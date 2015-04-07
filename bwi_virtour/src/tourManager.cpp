@@ -2,6 +2,7 @@
 #include "bwi_virtour/RequestTour.h"
 #include "bwi_virtour/PingTour.h"
 #include "bwi_virtour/GetTourState.h"
+#include "bwi_virtour/LeaveTour.h"
 
 TourManager* tm;
 
@@ -31,7 +32,7 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
 bool pingTour(bwi_virtour::PingTour::Request &req,
     bwi_virtour::PingTour::Response &res) {
 
-  if (req.user.compare(tm->tourLeader) == 0) {
+  if (tm->tourInProgress && req.user.compare(tm->tourLeader) == 0) {
     tm-> lastPingTime = ros::Time::now();
     res.result = 1;
   } else {
@@ -53,6 +54,22 @@ bool getTourState(bwi_virtour::GetTourState::Request &req,
   return true;
 }
 
+bool leaveTour(bwi_virtour::LeaveTour::Request &req,
+    bwi_virtour::LeaveTour::Response &res) {
+
+  if (tm->tourInProgress && req.user.compare(tm->tourLeader) == 0) {
+    //TODO add mutex
+    tm->tourInProgress = false;
+    tm->tourLeader = "";
+
+    res.result = 1;
+  } else {
+    res.result = TourManager::ERROR_NOTTOURLEADER;
+  }
+
+  return true;
+}
+
 int main(int argc, char **argv){
   tm = new TourManager(true);
 
@@ -62,7 +79,8 @@ int main(int argc, char **argv){
   /* Advertise services */
   ros::ServiceServer request_service = n.advertiseService("tourManager/request_tour", requestTour);
   ros::ServiceServer ping_service = n.advertiseService("tourManager/ping_tour", pingTour);
-  ros::ServiceServer get_tour_state_service= n.advertiseService("tourManager/get_tour_state", getTourState);
+  ros::ServiceServer get_tour_state_service = n.advertiseService("tourManager/get_tour_state", getTourState);
+  ros::ServiceServer leave_service = n.advertiseService("tourManager/leave_tour", leaveTour);
 
   ros::spin();
   return 0;
