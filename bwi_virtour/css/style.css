@@ -167,6 +167,13 @@ body {
   -webkit-box-shadow: 5px 5px 0px 0px #680015;
   box-shadow: 5px 5px 0px 0px #680015;
 }
+.yellow{
+  color:white;
+  background-color: #FFFF00;
+  -moz-box-shadow: 5px 5px 0px 0px #D6D600;
+  -webkit-box-shadow: 5px 5px 0px 0px #D6D600;
+  box-shadow: 5px 5px 0px 0px #D6D600;
+}
 .green:hover{
   color:white;
   cursor:pointer;
@@ -190,4 +197,12 @@ body {
   -moz-box-shadow: 5px 5px 0px 0px #9A001E;
   -webkit-box-shadow: 5px 5px 0px 0px #9A001E;
   box-shadow: 5px 5px 0px 0px #9A001E;
+}
+.yellow:hover{
+  color:white;
+  cursor:pointer;
+  background-color: #A4A400;
+  -moz-box-shadow: 5px 5px 0px 0px #A4A400;
+  -webkit-box-shadow: 5px 5px 0px 0px #A4A400;
+  box-shadow: 5px 5px 0px 0px #A4A400;
 }
