@@ -3,6 +3,7 @@
 #include "bwi_virtour/PingTour.h"
 #include "bwi_virtour/GetTourState.h"
 #include "bwi_virtour/LeaveTour.h"
+#include "bwi_virtour/IsLeader.h"
 
 TourManager* tm;
 
@@ -11,7 +12,6 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
 
   if (tm->tourAllowed) {
     if (!tm->tourInProgress) {
-      /* allow tour */
       //TODO add mutex
       tm->tourLeader = req.user;
       tm->tourInProgress = true;
@@ -65,6 +65,22 @@ bool leaveTour(bwi_virtour::LeaveTour::Request &req,
     res.result = 1;
   } else {
     res.result = TourManager::ERROR_NOTTOURLEADER;
+  }
+
+  return true;
+}
+
+bool isLeader(bwi_virtour::IsLeader::Request &req,
+    bwi_virtour::IsLeader::Response &res) {
+ 
+  if (tm->tourInProgress) {
+    if (req.user.compare(tm->tourLeader) == 0) {
+      res.result = 1;
+    } else {
+      res.result = TourManager::ERROR_NOTTOURLEADER;
+    }
+  } else {
+    res.result = TourManager::ERROR_NOTOURALLOWED;
   }
 
   return true;
