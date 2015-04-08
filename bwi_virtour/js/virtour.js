@@ -313,12 +313,13 @@ function requestTour() {
 $(document).ready(function() {
   log("Loaded.");
 
-  log("created identity");
+  log("Creating identity");
   createIdentity();
 
   log("Creating segbots");
   createSegbots();
 
+  log("Populating locations");
   populateLocations();
 });
 
