@@ -1,6 +1,10 @@
 // Constants
 var ROSBRIDGEPORT = 9090;
 var MJPEGSERVERPORT = 8080;
+var ERROR_NOTOURALLOWED = -2;
+var ERROR_TOURINPROGRESS = -3;
+var ERROR_NOTTOURLEADER = -4;
+
 
 // Globals
 var segbots = {};
@@ -306,6 +310,19 @@ function getTourState() {
 
 function requestTour() {
   log('requesting tour');
+  var request = new ROSLIB.ServiceRequest({ user: identity });
+  requestTourClient.callService(request, function(result) {
+    log(result);
+    if (result.result > 0) { //success
+      alert("success");
+    } else if (result.result == ERROR_NOTOURALLOWED) {
+      alert("no tour allowed");
+    } else if (result.result == ERROR_TOURINPROGRESS) {
+      alert("tour in progress");
+    } else if (result.result == ERROR_NOTTOURLEADER) {
+      alert("not tour leader");
+    }
+  });
 }
 
 
