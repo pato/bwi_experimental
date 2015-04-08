@@ -4,6 +4,7 @@ var MJPEGSERVERPORT = 8080;
 
 // Globals
 var segbots = {};
+var identity = null;
 var segbot = null;
 var servo1Cmd = null;
 var servo2Cmd = null;
@@ -12,6 +13,12 @@ var servo2Pos = 0.0;
 var moveBaseAction = null;
 var goToLocationClient = null;
 var rotateClient = null;
+var requestTourClient = null;
+var getTourStateClient = null;
+var pingTourClient = null;
+var leaveTourClient = null;
+var tourState = { tourAllowed: true, tourInProgress: false, tourDuration: 0,
+  tourStartTime: 0, lastPingTime: 0, tourLeader: 0};
 
 // Map conversions
 var map_res = 0.05;
@@ -65,6 +72,10 @@ function error(errorMessage, errorTitle = "Oops! This is embarassing") {
   $("#errorBody").text(errorMessage);
   $(".error-modal").modal();
   log("error: "+errorMessage);
+}
+
+function createIdentity() {
+  identity = getUUID();
 }
 
 function createSegbots() {
@@ -275,10 +286,35 @@ function requestRotate(rotateDelta) {
   });
 }
 
+function getUUID() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+            return v.toString(16);
+  });
+}
+
+function getTourState() {
+  log('getting tour state');
+  var request = new ROSLIB.ServiceRequest();
+  getTourStateClient.callService(request, function(result) {
+    tourState = { tourAllowed: result.tourAllowed, tourInProgress: result.tourInProgress,
+      tourDuration: result.tourDuration, tourStartTime: result.tourStartTime,
+      lastPingTime: result.lastPingTime, tourLeader: result.tourLeader};
+    log(tourState);
+  });
+}
+
+function requestTour() {
+  log('requesting tour');
+}
+
 
 // Handlers
 $(document).ready(function() {
   log("Loaded.");
+
+  log("created identity");
+  createIdentity();
 
   log("Creating segbots");
   createSegbots();
@@ -289,6 +325,7 @@ $(document).ready(function() {
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
   segbot = segbots[botname];
+  segbot = segbots['localhost'];
 
   log("Selected: " + botname); 
   segbot.connect();
@@ -352,8 +389,33 @@ $(".robot").click(function() {
     serviceType : 'bwi_virtour/Rotate'
   });
 
-//  var pose = ROSLIB.Pose({position : { x : 1, y : 1 }});
-//  sendGoal(pose);
+  // set up service client for requesting tours
+  requestTourClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/tourManager/request_tour',
+    serviceType : 'bwi_virtour/RequestTour'
+  });
+
+  // set up service client for getting tour state
+  getTourStateClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/tourManager/get_tour_state',
+    serviceType : 'bwi_virtour/GetTourState'
+  });
+
+  // set up service client for pinging the tour
+  pingTourClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/tourManager/ping_tour',
+    serviceType : 'bwi_virtour/PingTour'
+  });
+
+  // set up service client for leaving the tour
+  leaveTourClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/tourManager/leave_tour',
+    serviceType : 'bwi_virtour/LeaveTour'
+  });
 
   // reset the servo
   turnCenter();
