@@ -147,6 +147,8 @@ function updatePosition(x, y){
   xp = 100 * (x / map_res + map_origin_x + map_marker_offset) / map_width;
   yp = 100 * (y / map_res + map_origin_y + map_marker_offset) / map_height;
   yp = 100 - yp;
+  yp = yp - 10;
+  log("robot.xp = " + xp + " robot.yp = " + yp);
   //yp = yp - 20;
   //yp = yp - 15; // offset for height of image and for css position
   $(".pos-marker").css("left", xp + "%");

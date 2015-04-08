@@ -127,6 +127,10 @@ body {
   cursor: pointer;
 }
 
+.map-image{
+  position:relative;
+}
+
 .pos-map{
   position:relative;
 }
@@ -134,6 +138,10 @@ body {
 .pos-marker{
   position: absolute;
   height: 30px;
+  /*
+  margin-left: -30px;
+  margin-top: -15px;
+  */
 }
 
 .map-modal, .error-modal{
