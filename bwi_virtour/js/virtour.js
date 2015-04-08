@@ -256,14 +256,12 @@ function requestLocation(locationStr) {
     if (result.result == 1) { //success
       alert("success");
     } else if (result.result == -1) { // terminated
-
+      alert("terminated");
     } else if (result.result == -2) { // preempted
-
+      alert("preempted");
     } else if (result.result == -3) { // aborted
       alert("aborted");
-
     } else {
-
     }
   });
 }
