@@ -16,6 +16,8 @@ var servo1Cmd = null;
 var servo2Cmd = null;
 var servo1Pos = 0.0; // {-2,2} but locked to {-1,1}
 var servo2Pos = 0.0;
+var pingHandler = null;
+var pingInterval = 5000; // ms
 var moveBaseAction = null;
 var goToLocationClient = null;
 var rotateClient = null;
@@ -316,9 +318,11 @@ function requestTour() {
   requestTourClient.callService(request, function(result) {
     log(result);
     if (result.result > 0) { //success
-      alert("success");
       leader = true;
       showControls();
+      getTourState();
+      pingHandler = window.setInterval(pingTour, pingInterval);
+      alert("success");
     } else if (result.result == ERROR_NOTOURALLOWED) {
       alert("no tour allowed");
     } else if (result.result == ERROR_TOURINPROGRESS) {
@@ -352,6 +356,9 @@ function leaveTour() {
   var request = new ROSLIB.ServiceRequest({ user: identity });
   leaveTourClient.callService(request, function(result) {
     if (result.result > 0) {
+      leader = false;
+      window.clearInterval(pingHandler);
+      getTourState();
       log('left tour successfully');
     }
   });
