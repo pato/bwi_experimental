@@ -342,6 +342,17 @@ function pingTour() {
   });
 }
 
+function leaveTour() {
+  log('leaving tour');
+  var request = new ROSLIB.ServiceRequest({ user: identity });
+  leaveTourClient.callService(request, function(result) {
+    if (result.result > 0) {
+      log('left tour successfully');
+    }
+  });
+  return true;
+}
+
 
 // Handlers
 $(document).ready(function() {
