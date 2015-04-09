@@ -4,6 +4,7 @@ var MJPEGSERVERPORT = 8080;
 var ERROR_NOTOURALLOWED = -2;
 var ERROR_TOURINPROGRESS = -3;
 var ERROR_NOTTOURLEADER = -4;
+var ERROR_NOTOURINPROGRESS = -5;
 
 
 // Globals
@@ -325,6 +326,22 @@ function requestTour() {
   });
 }
 
+function pingTour() {
+  log('pinging tour');
+  var request = new ROSLIB.ServiceRequest({ user: identity });
+  pingTourClient.callService(request, function(result) {
+    if (result.result > 0) {
+      log('ping success');
+    } else if (result.result == ERROR_NOTOURALLOWED) {
+      alert("ping failed: no tour allowed");
+    } else if (result.result == ERROR_TOURINPROGRESS) {
+      alert("ping failed: tour in progress");
+    } else if (result.result == ERROR_NOTTOURLEADER) {
+      alert("ping failed: not tour leader");
+    }
+  });
+}
+
 
 // Handlers
 $(document).ready(function() {
@@ -343,7 +360,7 @@ $(document).ready(function() {
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
   segbot = segbots[botname];
-  //segbot = segbots['localhost'];
+  segbot = segbots['localhost'];
 
   log("Selected: " + botname); 
   segbot.connect();
