@@ -10,6 +10,7 @@ var ERROR_NOTOURINPROGRESS = -5;
 // Globals
 var segbots = {};
 var identity = null;
+var leader = false;
 var segbot = null;
 var servo1Cmd = null;
 var servo2Cmd = null;
@@ -316,6 +317,8 @@ function requestTour() {
     log(result);
     if (result.result > 0) { //success
       alert("success");
+      leader = true;
+      showControls();
     } else if (result.result == ERROR_NOTOURALLOWED) {
       alert("no tour allowed");
     } else if (result.result == ERROR_TOURINPROGRESS) {
@@ -355,6 +358,20 @@ function leaveTour() {
   return true;
 }
 
+function showControls() {
+  $(".servoControl").fadeIn();
+  $(".rotateControl").fadeIn();
+  $(".locationForm").fadeIn();
+  $(".navigateBtn").fadeIn();
+}
+
+function hideControls() {
+  $(".servoControl").hide();
+  $(".rotateControl").hide();
+  $(".locationForm").hide();
+  $(".navigateBtn").hide();
+}
+
 
 // Handlers
 $(document).ready(function() {
@@ -387,7 +404,7 @@ $(".robot").click(function() {
   $(".robots").fadeOut();
 
   // set up title
-  $(".controllingText").text("Controlling " + botname);
+  $(".controllingText").text("Viewing " + botname);
 
   // set up video streaming
   var videoTopic = "";
@@ -470,6 +487,8 @@ $(".robot").click(function() {
 
   // show the robot stuff
   $(".control").delay(800).fadeIn();
+
+  // tour setup
 });
 
 // add callback handlers for buttons
