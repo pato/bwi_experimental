@@ -57,7 +57,7 @@ bool getTourState(bwi_virtour::GetTourState::Request &req,
   res.tourDuration = tm->tourDuration;
   res.tourStartTime = tm->tourStartTime.toSec();
   res.lastPingTime = tm->lastPingTime.toSec();
-  res.tourLeader = tm->tourLeader;
+  res.tourLeader = ""; //tm->tourLeader; don't actually want to leak this
 
   return true;
 }

@@ -23,7 +23,7 @@ var getTourStateClient = null;
 var pingTourClient = null;
 var leaveTourClient = null;
 var tourState = { tourAllowed: true, tourInProgress: false, tourDuration: 0,
-  tourStartTime: 0, lastPingTime: 0, tourLeader: 0};
+  tourStartTime: 0, lastPingTime: 0};
 
 // Map conversions
 var map_res = 0.05;
@@ -304,7 +304,7 @@ function getTourState() {
   getTourStateClient.callService(request, function(result) {
     tourState = { tourAllowed: result.tourAllowed, tourInProgress: result.tourInProgress,
       tourDuration: result.tourDuration, tourStartTime: result.tourStartTime,
-      lastPingTime: result.lastPingTime, tourLeader: result.tourLeader};
+      lastPingTime: result.lastPingTime};
     log(tourState);
   });
 }
