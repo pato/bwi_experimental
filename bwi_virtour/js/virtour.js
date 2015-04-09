@@ -338,6 +338,8 @@ function pingTour() {
       alert("ping failed: tour in progress");
     } else if (result.result == ERROR_NOTTOURLEADER) {
       alert("ping failed: not tour leader");
+    } else if (result.result == ERROR_NOTOURINPROGRESS) {
+      alert("ping failed: no tour in progress");
     }
   });
 }
