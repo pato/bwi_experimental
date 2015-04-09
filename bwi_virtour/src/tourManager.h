@@ -14,6 +14,7 @@ class TourManager{
     static const int ERROR_NOTOURALLOWED = -2;
     static const int ERROR_TOURINPROGRESS = -3;
     static const int ERROR_NOTTOURLEADER = -4;
+    static const int ERROR_NOTOURINPROGRESS = -5;
 
     TourManager(bool tourAllowed) : tourAllowed(tourAllowed),
       tourInProgress(false), tourStartTime(0) {

@@ -32,11 +32,19 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
 bool pingTour(bwi_virtour::PingTour::Request &req,
     bwi_virtour::PingTour::Response &res) {
 
-  if (tm->tourInProgress && req.user.compare(tm->tourLeader) == 0) {
-    tm-> lastPingTime = ros::Time::now();
-    res.result = 1;
+  if (tm->tourAllowed) {
+    if (tm->tourInProgress) {
+      if (req.user.compare(tm->tourLeader) == 0) {
+        tm-> lastPingTime = ros::Time::now();
+        res.result = 1;
+      } else {
+        res.result = TourManager::ERROR_NOTTOURLEADER;
+      }
+    } else {
+      res.result = TourManager::ERROR_NOTOURINPROGRESS;
+    }
   } else {
-    res.result = TourManager::ERROR_NOTTOURLEADER;
+    res.result = TourManager::ERROR_NOTOURALLOWED;
   }
   return true;
 }
