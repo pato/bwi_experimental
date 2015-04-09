@@ -403,6 +403,9 @@ $(".robot").click(function() {
   $(".intro").fadeOut();
   $(".robots").fadeOut();
 
+  // hide the controls
+  hideControls();
+
   // set up title
   $(".controllingText").text("Viewing " + botname);
 
@@ -489,6 +492,13 @@ $(".robot").click(function() {
   $(".control").delay(800).fadeIn();
 
   // tour setup
+  getTourState();
+
+  if (tourState.tourAllowed && !tourState.tourInProgress) {
+    alert("tour available!");
+  } else {
+    alert("someone is controlling the tour, enjoy!");
+  }
 });
 
 // add callback handlers for buttons
