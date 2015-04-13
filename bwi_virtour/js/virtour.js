@@ -417,6 +417,9 @@ $(document).ready(function() {
 
   log("Populating locations");
   populateLocations();
+
+  $(".requestTour").hide();
+  $(".leaveTour").hide();
 });
 
 $(".robot").click(function() {
