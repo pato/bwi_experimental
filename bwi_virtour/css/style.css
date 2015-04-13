@@ -110,6 +110,21 @@ body {
   top: 84px;
   left: 50px;
 }
+.leaderControl{
+  width: 40%;
+  height: 50px;
+  position: absolute;
+  left: 30%;
+  top: 750px;
+  background-color: rgba(55,55,55,0.5);
+  text-align: center;
+  padding: 15px;
+}
+.leaderControl .getTourStatus{
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
 .labmap{
   min-width: 250px;
   position: absolute;

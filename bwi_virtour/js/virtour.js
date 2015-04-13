@@ -314,11 +314,23 @@ function getTourState() {
     tourStateFresh = true;
 
     if (tourState.tourAllowed && !tourState.tourInProgress) {
-      alert("tour available!");
+      $(".leaderText").text("Tour available!");
+      $(".requestTour").show();
+      $(".leaveTour").hide();
+      $(".leaderControl").height(60);
+      $(".leaderControl").css("top", "710px");
     } else if (leader) {
-      alert("You are the leader");
+      $(".leaderText").text("You are controlling the tour!");
+      $(".requestTour").hide();
+      $(".leaveTour").show();
+      $(".leaderControl").height(60);
+      $(".leaderControl").css("top", "710px");
     } else {
-      alert("someone is controlling the tour, enjoy!");
+      $(".leaderText").text("Someone is controlling the tour, enjoy!");
+      $(".requestTour").hide();
+      $(".leaveTour").hide();
+      $(".leaderControl").height(20);
+      $(".leaderControl").css("top", "750px");
     }
 
     log(tourState);
@@ -335,13 +347,12 @@ function requestTour() {
       showControls();
       getTourState();
       pingHandler = window.setInterval(pingTour, pingInterval);
-      alert("success");
     } else if (result.result == ERROR_NOTOURALLOWED) {
-      alert("no tour allowed");
+      alert("No tour allowed");
     } else if (result.result == ERROR_TOURINPROGRESS) {
-      alert("tour in progress");
+      alert("Tour in progress");
     } else if (result.result == ERROR_NOTTOURLEADER) {
-      alert("not tour leader");
+      alert("Not tour leader");
     }
   });
 }
@@ -525,6 +536,20 @@ $(".turnCenter").click(function() {turnCenter();});
 $(".labimage").click(function() {showMap();});
 $(".rotateRight").click(function() {rotateRight();});
 $(".rotateLeft").click(function() {rotateLeft();});
+
+$(".getTourState").click(function() {
+  getTourState();
+});
+
+$(".requestTour").click(function() {
+  requestTour();
+  getTourState();
+});
+
+$(".leaveTour").click(function() {
+  leaveTour();
+  getTourState();
+});
 
 // add callback handlers for navigate form
 $(".navigateBtn").click(function() {
