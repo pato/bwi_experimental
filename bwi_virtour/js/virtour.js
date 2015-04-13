@@ -348,11 +348,11 @@ function requestTour() {
       getTourState();
       pingHandler = window.setInterval(pingTour, pingInterval);
     } else if (result.result == ERROR_NOTOURALLOWED) {
-      alert("No tour allowed");
+      alert("Sorry! No tour allowed");
     } else if (result.result == ERROR_TOURINPROGRESS) {
-      alert("Tour in progress");
-    } else if (result.result == ERROR_NOTTOURLEADER) {
-      alert("Not tour leader");
+      alert("Sorry! There is already a tour in progress");
+    } else {
+      alert("Sorry! There was an error ("+result.result+")");
     }
   });
 }
@@ -542,11 +542,13 @@ $(".getTourState").click(function() {
 });
 
 $(".requestTour").click(function() {
+  getTourState();
   requestTour();
   getTourState();
 });
 
 $(".leaveTour").click(function() {
+  getTourState();
   leaveTour();
   getTourState();
 });
