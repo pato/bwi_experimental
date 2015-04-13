@@ -1,6 +1,6 @@
 Imperative:
-* Add gui for becoming a leader
 * Add checking to see if last ping time is greater than 15 seconds for request tour in tourmanager.cpp
+* Add tour leaving whenever user navigates away
 * Add authentication checking for goToLocationNode and rotateNode
 * Implement rotate
 
@@ -10,6 +10,7 @@ Stretch goals:
 * Add detection of which robots are actually active
 
 Done:
+* Add gui for becoming a leader
 * Add position marking
 * Add pinging of tour
 * Add leaving tour
