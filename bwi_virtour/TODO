@@ -1,5 +1,4 @@
 Imperative:
-* Add authentication checking for goToLocationNode and rotateNode
 * Implement rotate
 
 Stretch goals:
@@ -17,3 +16,4 @@ Done:
 * Add leader functionality
 * Do not publish the leader key in getTourState
 * Add checking to see if last ping time is greater than 15 seconds for request tour in tourmanager.cpp
+* Add authentication checking for goToLocationNode and rotateNode
