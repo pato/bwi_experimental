@@ -306,10 +306,21 @@ function getTourState() {
   log('getting tour state');
   var request = new ROSLIB.ServiceRequest();
   getTourStateClient.callService(request, function(result) {
+
     tourState = { tourAllowed: result.tourAllowed, tourInProgress: result.tourInProgress,
       tourDuration: result.tourDuration, tourStartTime: result.tourStartTime,
       lastPingTime: result.lastPingTime};
+
     tourStateFresh = true;
+
+    if (tourState.tourAllowed && !tourState.tourInProgress) {
+      alert("tour available!");
+    } else if (leader) {
+      alert("You are the leader");
+    } else {
+      alert("someone is controlling the tour, enjoy!");
+    }
+
     log(tourState);
   });
 }
@@ -399,7 +410,7 @@ $(document).ready(function() {
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
   segbot = segbots[botname];
-  segbot = segbots['localhost'];
+  segbot = segbots['localhost']; /* TODO: DEBUG ONLY */
 
   log("Selected: " + botname); 
   segbot.connect();
@@ -503,13 +514,6 @@ $(".robot").click(function() {
   // tour setup
   getTourState();
 
-  if (tourStateFresh) {
-    if (tourState.tourAllowed && !tourState.tourInProgress) {
-      alert("tour available!");
-    } else {
-      alert("someone is controlling the tour, enjoy!");
-    }
-  }
 });
 
 // add callback handlers for buttons
