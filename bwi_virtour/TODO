@@ -1,6 +1,4 @@
 Imperative:
-* Add checking to see if last ping time is greater than 15 seconds for request tour in tourmanager.cpp
-* Add tour leaving whenever user navigates away
 * Add authentication checking for goToLocationNode and rotateNode
 * Implement rotate
 
@@ -11,9 +9,11 @@ Stretch goals:
 
 Done:
 * Add gui for becoming a leader
+* Add tour leaving whenever user navigates away
 * Add position marking
 * Add pinging of tour
 * Add leaving tour
 * Add requesting of tours
 * Add leader functionality
 * Do not publish the leader key in getTourState
+* Add checking to see if last ping time is greater than 15 seconds for request tour in tourmanager.cpp

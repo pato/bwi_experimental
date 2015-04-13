@@ -405,7 +405,7 @@ function hideControls() {
 }
 
 
-// Handlers
+// Page Handlers
 $(document).ready(function() {
   log("Loaded.");
 
@@ -420,7 +420,24 @@ $(document).ready(function() {
 
   $(".requestTour").hide();
   $(".leaveTour").hide();
+
+  setBeforeUnload();
 });
+
+function setBeforeUnload() {
+  window.onbeforeunload = function() {
+    if (leader) {
+      leaveTour();
+      return
+    } else {
+      return;
+    }
+  };
+}
+
+function clearBeforeUnload() {
+  window.onbeforeunload = null;
+}
 
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
