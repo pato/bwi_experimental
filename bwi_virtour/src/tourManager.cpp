@@ -102,14 +102,18 @@ bool leaveTour(bwi_virtour::LeaveTour::Request &req,
   return true;
 }
 
-bool isLeader(bwi_virtour::IsLeader::Request &req,
-    bwi_virtour::IsLeader::Response &res) {
+bool authenticate(bwi_virtour::Authenticate::Request &req,
+    bwi_virtour::Authenticate::Response &res) {
  
-  if (tm->tourInProgress) {
-    if (req.user.compare(tm->tourLeader) == 0) {
-      res.result = 1;
+  if (tm->tourAllowed) {
+    if (tm->tourInProgress) {
+      if (req.user.compare(tm->tourLeader) == 0) {
+        res.result = 1;
+      } else {
+        res.result = TourManager::ERROR_NOTTOURLEADER;
+      }
     } else {
-      res.result = TourManager::ERROR_NOTTOURLEADER;
+      res.result = TourManager::ERROR_NOTOURINPROGRESS;
     }
   } else {
     res.result = TourManager::ERROR_NOTOURALLOWED;
@@ -129,6 +133,7 @@ int main(int argc, char **argv){
   ros::ServiceServer ping_service = n.advertiseService("tourManager/ping_tour", pingTour);
   ros::ServiceServer get_tour_state_service = n.advertiseService("tourManager/get_tour_state", getTourState);
   ros::ServiceServer leave_service = n.advertiseService("tourManager/leave_tour", leaveTour);
+  ros::ServiceServer authenticate_service = n.advertiseService("tourManager/authenticate", authenticate);
 
   ros::spin();
   return 0;

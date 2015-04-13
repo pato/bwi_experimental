@@ -60,7 +60,7 @@ add_service_files(
   PingTour.srv
   GetTourState.srv
   LeaveTour.srv
-  IsLeader.srv
+  Authenticate.srv
 )
 
 ## Generate actions in the 'action' folder
