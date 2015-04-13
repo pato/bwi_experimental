@@ -20,7 +20,7 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
       res.startTime = tm->tourStartTime.toSec();
       res.result = tm->tourDuration;
       ROS_INFO("New tour leader is %s", req.user.c_str());
-    } else if (tm->lastPingTime - ros::Time::now() > ros::Duration(30)) {
+    } else if (ros::Time::now() - tm->lastPingTime > ros::Duration(30)) {
       /* If the last tour expired (last ping time was more than 30 seconds ago)*/
       tm->tourLeader = req.user;
       tm->tourInProgress = true;
@@ -37,6 +37,16 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
   }
 
   return true;
+}
+
+void checkTourExpired() {
+  ros::Duration d = ros::Time::now() - tm->lastPingTime;
+  if (tm->tourAllowed && tm->tourInProgress &&
+      ros::Time::now() - tm->lastPingTime > ros::Duration(30)) {
+    tm->tourInProgress = false;
+    tm->tourLeader = "";
+    ROS_INFO("Tour expired!");
+  }
 }
 
 bool pingTour(bwi_virtour::PingTour::Request &req,
@@ -62,12 +72,15 @@ bool pingTour(bwi_virtour::PingTour::Request &req,
 bool getTourState(bwi_virtour::GetTourState::Request &req,
     bwi_virtour::GetTourState::Response &res) {
 
+  checkTourExpired();
+
   res.tourAllowed = tm->tourAllowed;
   res.tourInProgress = tm->tourInProgress;
   res.tourDuration = tm->tourDuration;
   res.tourStartTime = tm->tourStartTime.toSec();
   res.lastPingTime = tm->lastPingTime.toSec();
   res.tourLeader = ""; //tm->tourLeader; don't actually want to leak this
+
 
   return true;
 }
