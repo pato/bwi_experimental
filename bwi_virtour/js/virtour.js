@@ -25,8 +25,9 @@ var requestTourClient = null;
 var getTourStateClient = null;
 var pingTourClient = null;
 var leaveTourClient = null;
-var tourState = { tourAllowed: true, tourInProgress: false, tourDuration: 0,
+var tourState = { tourAllowed: false, tourInProgress: false, tourDuration: 0,
   tourStartTime: 0, lastPingTime: 0};
+var tourStateFresh = false;
 
 // Map conversions
 var map_res = 0.05;
@@ -308,6 +309,7 @@ function getTourState() {
     tourState = { tourAllowed: result.tourAllowed, tourInProgress: result.tourInProgress,
       tourDuration: result.tourDuration, tourStartTime: result.tourStartTime,
       lastPingTime: result.lastPingTime};
+    tourStateFresh = true;
     log(tourState);
   });
 }
@@ -501,10 +503,12 @@ $(".robot").click(function() {
   // tour setup
   getTourState();
 
-  if (tourState.tourAllowed && !tourState.tourInProgress) {
-    alert("tour available!");
-  } else {
-    alert("someone is controlling the tour, enjoy!");
+  if (tourStateFresh) {
+    if (tourState.tourAllowed && !tourState.tourInProgress) {
+      alert("tour available!");
+    } else {
+      alert("someone is controlling the tour, enjoy!");
+    }
   }
 });
 
