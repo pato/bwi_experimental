@@ -16,9 +16,19 @@ bool requestTour(bwi_virtour::RequestTour::Request &req,
       tm->tourLeader = req.user;
       tm->tourInProgress = true;
       tm->tourStartTime = ros::Time::now();
+      tm->lastPingTime = ros::Time::now();
       res.startTime = tm->tourStartTime.toSec();
       res.result = tm->tourDuration;
-
+      ROS_INFO("New tour leader is %s", req.user.c_str());
+    } else if (tm->lastPingTime - ros::Time::now() > ros::Duration(30)) {
+      /* If the last tour expired (last ping time was more than 30 seconds ago)*/
+      tm->tourLeader = req.user;
+      tm->tourInProgress = true;
+      tm->tourStartTime = ros::Time::now();
+      tm->lastPingTime = ros::Time::now();
+      res.startTime = tm->tourStartTime.toSec();
+      res.result = tm->tourDuration;
+      ROS_INFO("Last tour expired! New tour leader is %s", req.user.c_str());
     } else {
       res.result = TourManager::ERROR_TOURINPROGRESS;
     }
@@ -35,7 +45,7 @@ bool pingTour(bwi_virtour::PingTour::Request &req,
   if (tm->tourAllowed) {
     if (tm->tourInProgress) {
       if (req.user.compare(tm->tourLeader) == 0) {
-        tm-> lastPingTime = ros::Time::now();
+        tm->lastPingTime = ros::Time::now();
         res.result = 1;
       } else {
         res.result = TourManager::ERROR_NOTTOURLEADER;
@@ -69,6 +79,7 @@ bool leaveTour(bwi_virtour::LeaveTour::Request &req,
     //TODO add mutex
     tm->tourInProgress = false;
     tm->tourLeader = "";
+      ROS_INFO("%s left the tour!", req.user.c_str());
 
     res.result = 1;
   } else {
