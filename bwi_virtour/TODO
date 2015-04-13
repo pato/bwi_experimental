@@ -1,13 +1,13 @@
 Imperative:
-* Add detection of which robots are actually active
+* Add gui for becoming a leader
 * Add checking to see if last ping time is greater than 15 seconds for request tour in tourmanager.cpp
 * Add authentication checking for goToLocationNode and rotateNode
 * Implement rotate
-* Add gui for becoming a leader
 
 Stretch goals:
 * Generate identity from ip address instead of UUID
 * Add mutex to tourManager
+* Add detection of which robots are actually active
 
 Done:
 * Add position marking
