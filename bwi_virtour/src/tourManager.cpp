@@ -3,7 +3,7 @@
 #include "bwi_virtour/PingTour.h"
 #include "bwi_virtour/GetTourState.h"
 #include "bwi_virtour/LeaveTour.h"
-#include "bwi_virtour/IsLeader.h"
+#include "bwi_virtour/Authenticate.h"
 
 TourManager* tm;
 
