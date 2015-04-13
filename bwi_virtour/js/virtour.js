@@ -381,6 +381,7 @@ function leaveTour() {
   leaveTourClient.callService(request, function(result) {
     if (result.result > 0) {
       leader = false;
+      hideControls();
       window.clearInterval(pingHandler);
       getTourState();
       log('left tour successfully');
@@ -537,7 +538,7 @@ $(".labimage").click(function() {showMap();});
 $(".rotateRight").click(function() {rotateRight();});
 $(".rotateLeft").click(function() {rotateLeft();});
 
-$(".getTourState").click(function() {
+$(".getTourStatus").click(function() {
   getTourState();
 });
 
