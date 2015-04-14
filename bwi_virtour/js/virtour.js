@@ -164,9 +164,12 @@ function subscribePoseListener(ros) {
 
 function updatePosition(x, y){
   log("robot.x = " + x + " robot.y = " + y);
-  xp = 100 * (x / map_res + map_origin_x + map_marker_offset) / map_width;
-  yp = 100 * (y / map_res + map_origin_y + map_marker_offset) / map_height;
+//  x = 0 - x;
+//  y = 0 - y;
+  xp = 100 * ((x - map_origin_x) / map_res - map_marker_offset) / map_width;
+  yp = 100 * ((y - map_origin_y) / map_res - map_marker_offset) / map_height;
   yp = 100 - yp;
+  //xp = xp - 10;
   yp = yp - 10;
   log("robot.xp = " + xp + " robot.yp = " + yp);
   //yp = yp - 20;
