@@ -9,5 +9,5 @@
   </node>
   <node name="go_to_location_service_node" pkg="bwi_virtour" type="go_to_location_service_node" />
   <node name="rotate_service_node" pkg="bwi_virtour" type="rotate_service_node" />
-  <node name="tour_manager" pkg="bwi_virtour" type="tour_manager_node" />
+  <node name="tour_manager" pkg="bwi_virtour" type="tour_manager" />
 </launch>
