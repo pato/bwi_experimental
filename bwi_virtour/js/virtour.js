@@ -442,7 +442,7 @@ function clearBeforeUnload() {
 $(".robot").click(function() {
   var botname = $(this).attr("robot");
   segbot = segbots[botname];
-  segbot = segbots['localhost']; /* TODO: DEBUG ONLY */
+  //segbot = segbots['localhost']; /* TODO: DEBUG ONLY */
 
   log("Selected: " + botname); 
   segbot.connect();
