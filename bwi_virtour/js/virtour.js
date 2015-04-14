@@ -269,7 +269,7 @@ function sendGoal(pose) {
 
 function requestLocation(locationStr) {
   log('requesting goToLocation: ' + locationStr);
-  var request = new ROSLIB.ServiceRequest({ location: locationStr});
+  var request = new ROSLIB.ServiceRequest({ location: locationStr, user: identity});
   goToLocationClient.callService(request, function(result) {
     log('Result for requestLocation service call on '
       + goToLocationClient.name + ': ' + result.result);
@@ -288,7 +288,7 @@ function requestLocation(locationStr) {
 
 function requestRotate(rotateDelta) {
   log('requesting rotate: ' + rotateDelta);
-  var request = new ROSLIB.ServiceRequest({ rotateDelta: rotateDelta});
+  var request = new ROSLIB.ServiceRequest({ rotateDelta: rotateDelta, user: identity});
   rotateClient.callService(request, function(result) {
     log('Result for requestRotate service call on '
       + rotateClient.name + ': ' + result.result);
