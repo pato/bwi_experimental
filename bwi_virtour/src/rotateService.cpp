@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include "bwi_virtour/GoToLocation.h"
 #include "bwi_virtour/Authenticate.h"
+#include "geometry_msgs/Twist.h"
 
 typedef actionlib::SimpleActionClient<bwi_kr_execution::ExecutePlanAction> Client;
 
@@ -33,11 +34,11 @@ bool rotate(bwi_virtour::Rotate::Request &req,
   /* TODO: Add rotate capability */
 
   geometry_msgs::Twist msg;
-  msg.angular.z = 0.5;
-  //cmd_vel_pub->publish(msg);
+  msg.angular.z = 1;
+  ROS_INFO("created message");
   cmd_vel_pub.publish(msg);
+  ROS_INFO("published message");
   
-
   res.result = 1;
   return true;
 }
@@ -49,7 +50,7 @@ int main(int argc, char**argv) {
   //client = new Client("/action_executor/execute_plan", true);
 
   //ros::Publisher cmd_vel_pub = n.advertise<std_msgs::String>("/cmd_vel", 1000);
-  cmd_vel_pub = n.advertise<std_msgs::String>("/cmd_vel", 1000);
+  cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
   ros::ServiceServer service = n.advertiseService("rotate", rotate);
   ROS_INFO("Rotate Service Started");
 
