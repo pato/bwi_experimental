@@ -18,6 +18,11 @@ bool rotateRequest(bwi_virtour::Rotate::Request &req,
   
   ROS_INFO("Received rotate request");
   float rotateDelta = req.rotateDelta;
+  if (rotateDelta > 2) {
+    rotateDelta = 2;
+  } else if (rotateDelta < -2) {
+    rotateDelta = -2;
+  }
 
   ROS_INFO("authenticating user: %s", req.user.c_str());
   bwi_virtour::Authenticate::Request auth_req;
@@ -32,13 +37,9 @@ bool rotateRequest(bwi_virtour::Rotate::Request &req,
     }
   }
   
-  /* TODO: Add rotate capability */
-
   geometry_msgs::Twist msg;
-  msg.angular.z = 1;
-  ROS_INFO("created message");
+  msg.angular.z = rotateDelta;
   cmd_vel_pub.publish(msg);
-  ROS_INFO("published message");
   
   res.result = 1;
   return true;
