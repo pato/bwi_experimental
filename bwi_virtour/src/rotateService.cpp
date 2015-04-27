@@ -7,7 +7,7 @@
 typedef actionlib::SimpleActionClient<bwi_kr_execution::ExecutePlanAction> Client;
 
 Client* client;
-ros::Publisher* cmd_vel_pub;
+ros::Publisher cmd_vel_pub;
 
 using namespace std;
 
@@ -34,8 +34,8 @@ bool rotate(bwi_virtour::Rotate::Request &req,
 
   geometry_msgs::Twist msg;
   msg.angular.z = 0.5;
-  cmd_vel_pub->publish(msg);
-  //cmd_vel_pub.publish(msg);
+  //cmd_vel_pub->publish(msg);
+  cmd_vel_pub.publish(msg);
   
 
   res.result = 1;
