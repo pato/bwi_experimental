@@ -112,7 +112,7 @@ add_executable(go_to_location_service_node src/go_to_location_service.cpp)
 add_dependencies(go_to_location_service_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(go_to_location_service_node ${catkin_LIBRARIES})
 
-add_executable(rotate_service_node src/rotate_service.cpp)
+add_executable(rotate_service_node src/rotateService.cpp)
 add_dependencies(rotate_service_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(rotate_service_node ${catkin_LIBRARIES})
 

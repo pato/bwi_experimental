@@ -4,6 +4,7 @@
 #include "bwi_virtour/GoToLocation.h"
 #include "bwi_virtour/Authenticate.h"
 #include "geometry_msgs/Twist.h"
+#include "bwi_virtour/Rotate.h"
 
 typedef actionlib::SimpleActionClient<bwi_kr_execution::ExecutePlanAction> Client;
 
@@ -12,7 +13,7 @@ ros::Publisher cmd_vel_pub;
 
 using namespace std;
 
-bool rotate(bwi_virtour::Rotate::Request &req,
+bool rotateRequest(bwi_virtour::Rotate::Request &req,
     bwi_virtour::Rotate::Response &res) {
   
   ROS_INFO("Received rotate request");
@@ -51,7 +52,7 @@ int main(int argc, char**argv) {
 
   //ros::Publisher cmd_vel_pub = n.advertise<std_msgs::String>("/cmd_vel", 1000);
   cmd_vel_pub = n.advertise<geometry_msgs::Twist>("/cmd_vel", 1000);
-  ros::ServiceServer service = n.advertiseService("rotate", rotate);
+  ros::ServiceServer service = n.advertiseService("rotate", rotateRequest);
   ROS_INFO("Rotate Service Started");
 
   ros::spin();

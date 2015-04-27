@@ -3,6 +3,7 @@
 #include <ros/ros.h>
 #include "bwi_virtour/GoToLocation.h"
 #include "bwi_virtour/Authenticate.h"
+#include "bwi_virtour/Rotate.h"
 
 typedef actionlib::SimpleActionClient<bwi_kr_execution::ExecutePlanAction> Client;
 
