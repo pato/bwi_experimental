@@ -20,11 +20,14 @@ Instructions
 
 On robot:
 1. Set up smallDNS
+
 2. Bring up robot (eg: `roslaunch bwi_launch segbot_v2.launch`)
+
 3. Launch `roslaunch bwi_virtour virtour.launch`
 
 On server:
 1. Place repo in `/var/www`
+
 2. Modify `index.html` to add robot
 
 ROS Nodes
