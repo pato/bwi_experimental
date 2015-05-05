@@ -32,23 +32,35 @@ On server:
 
 ## ROS Nodes
 
-* `tour_manager` - tour leader state machine
-* `go_to_location_service_node` - logical navigation commands
-* `rotation_service_node` - rotation commands
-
 ### Tour Manager
 
-Manages the tour state machine. Handles tour leaders, when
+Handles by `tour_manager`. Manages the tour state machine. Handles tour leaders, when
 tours are allowed, and authentication.
+
+#### Exposed Services
+
+* `/tourManager/authenticate` - used to authenticate users and check if they are leader
+* `/tourManager/get_tour_state` - get the state of the current tour (excluding leader hash)
+* `/tourManager/leave_tour` - used to demote leaders
+* `/tourManager/ping_tour` - used to keep the tour leader alive
+* `/tourManager/request_tour` - used to request tours
 
 ### Logical Navigation
 
 Handled by the `go_to_location_service_node`.
 To add new goals, edit `js/virtour.js`
 
+#### Exposed Services
+
+* `/go_to_location` - used to navigate to semantic locations
+
 ### Rotation
 
 Handled by `rotation_service_node`. Takes in a float for the rotation delta
+
+#### Exposed Services
+
+* `/rotate` - used to perform on-the-spot rotations
 
 ## Project structure
 
