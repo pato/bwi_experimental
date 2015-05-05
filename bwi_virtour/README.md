@@ -26,7 +26,7 @@ On robot:
 
 On server:
 
-1. Place repo in `/var/www`
+1. Link or copy the `web` folder to `/var/www`
 
 2. Modify `index.html` to add robot
 
