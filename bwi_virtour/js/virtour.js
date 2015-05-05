@@ -76,7 +76,8 @@ var Segbot = {
 }
 
 // Functions
-function error(errorMessage, errorTitle = "Oops! This is embarassing") {
+function error(errorMessage, errorTitle) {
+  errorTitle = errorTitle || "Oops! This is embarassing";
   $("#errorTitle").text(errorTitle);
   $("#errorBody").text(errorMessage);
   $(".error-modal").modal();
