@@ -110,6 +110,10 @@ body {
   top: 84px;
   left: 50px;
 }
+.viewScavengerHunt{
+  position: absolute;
+  right: 0px;
+}
 .leaderControl{
   width: 40%;
   height: 50px;
