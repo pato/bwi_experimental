@@ -408,6 +408,11 @@ function hideControls() {
   $(".navigateBtn").hide();
 }
 
+function viewScavengerHunt() {
+  log("view scavenger hunt");
+  $(".scavengerhunt-modal").modal();
+}
+
 
 // Page Handlers
 $(document).ready(function() {
@@ -576,6 +581,10 @@ $(".leaveTour").click(function() {
   getTourState();
   leaveTour();
   getTourState();
+});
+
+$(".viewScavengerHunt").click(function() {
+  viewScavengerHunt();
 });
 
 // add callback handlers for navigate form
