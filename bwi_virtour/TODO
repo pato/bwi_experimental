@@ -1,10 +1,12 @@
 Imperative:
-* Implement rotate
 
 Stretch goals:
-* Generate identity from ip address instead of UUID
+* Add scavenger hunt information screen
 * Add mutex to tourManager
 * Add detection of which robots are actually active
+
+Non-goals:
+* Generate identity from ip address instead of UUID
 
 Done:
 * Add gui for becoming a leader
@@ -17,3 +19,5 @@ Done:
 * Do not publish the leader key in getTourState
 * Add checking to see if last ping time is greater than 15 seconds for request tour in tourmanager.cpp
 * Add authentication checking for goToLocationNode and rotateNode
+* Implement rotate
+* Fix default parameter bug in chrome
