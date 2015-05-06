@@ -19,6 +19,7 @@ var servo2Pos = 0.0;
 var pingHandler = null;
 var pingInterval = 5000; // ms
 var moveBaseAction = null;
+var topicsClient = null;
 var goToLocationClient = null;
 var rotateClient = null;
 var requestTourClient = null;
@@ -28,6 +29,7 @@ var leaveTourClient = null;
 var tourState = { tourAllowed: false, tourInProgress: false, tourDuration: 0,
   tourStartTime: 0, lastPingTime: 0};
 var tourStateFresh = false;
+var topics = null;
 
 // Scavenger Hunt Statuses
 var FINISHED = "<span class=\"glyphicon glyphicon-ok\"></span> Done";
@@ -346,6 +348,19 @@ function getUUID() {
   });
 }
 
+function getTopics() {
+  log('getting topics');
+  var request = new ROSLIB.ServiceRequest();
+  topicsClient.callService(request, function(result) {
+    topics = result.topics;
+    log(topics);
+  });
+}
+
+function topicAvailable(topic) {
+  return $.inArray(topic, topics) > -1;
+}
+
 function getTourState() {
   log('getting tour state');
   var request = new ROSLIB.ServiceRequest();
@@ -498,6 +513,9 @@ $(".robot").click(function() {
   subscribePoseListener(segbot.ros);
   subscribeScavengerHuntListener(segbot.ros);
 
+  // get topics
+  getTopics();
+
   // hide the intro stuff
   $(".intro").fadeOut();
   $(".robots").fadeOut();
@@ -510,7 +528,7 @@ $(".robot").click(function() {
 
   // set up video streaming
   var videoTopic = "";
-  if (botname == "roberto") {
+  if (topicAvailable("/camera/image_raw")) {
     videoTopic = "/camera/image_raw";
     //videoTopic += "?invert";
     log("Using /camera/image_raw for video source");
@@ -568,6 +586,13 @@ $(".robot").click(function() {
     ros : segbot.ros,
     name : '/tourManager/get_tour_state',
     serviceType : 'bwi_virtour/GetTourState'
+  });
+
+  // set up service client for getting list of topics 
+  topicsClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/rosapi/topics',
+    serviceType : 'rosapi/Topics'
   });
 
   // set up service client for pinging the tour
