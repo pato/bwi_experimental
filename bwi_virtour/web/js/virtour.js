@@ -29,6 +29,11 @@ var tourState = { tourAllowed: false, tourInProgress: false, tourDuration: 0,
   tourStartTime: 0, lastPingTime: 0};
 var tourStateFresh = false;
 
+// Scavenger Hunt Statuses
+var FINISHED = "Done <span class=\"glyphicon glyphicon-ok\"></span>";
+var ONGOING  = "Ongoing <span class=\"glyphicon glyphicon-time\"></span>";
+var TODO     = "To do <span class=\"glyphicon glyphicon-calendar\"></span>";
+
 // Map conversions
 var map_res = 0.05;
 var map_origin_x = -60.45;
@@ -176,9 +181,29 @@ function subscribeScavengerHuntListener(ros) {
   });
 }
 
+function viewScavengerHunt() {
+  log("view scavenger hunt");
+  $(".scavengerhunt-modal").modal();
+}
+
 function updateScavengerHuntStatus(msg) {
   log("updated scavengerHuntStatus");
   log(msg);
+  var names = ['Find someone wearing blue shirt', 'Eat pizza', 'Find coffee cup'];
+  var statuses = [1, 3, 2];
+  
+  for (var i = 0; i < names.length; i++) {
+    name = names[i];
+    switch (statuses[i]) {
+      case 1:
+        stat = ONGOING;break;
+      case 2:
+        stat = FINISHED;break;
+      case 3:
+        stat = TODO;break;
+    }
+    $(".scavengerhunt-table > tbody:last").append('<tr><td>' + name + '</td><td>' + stat + '</td></tr>');
+  }
 }
 
 function updatePosition(x, y){
@@ -426,15 +451,6 @@ function hideControls() {
   $(".navigateBtn").hide();
 }
 
-function viewScavengerHunt() {
-  log("view scavenger hunt");
-  $(".scavengerhunt-modal").modal();
-  var name = "More hunt";
-  var done = "Done <span class=\"glyphicon glyphicon-ok\"></span>";
-  var ongoing = "Ongoing <span class=\"glyphicon glyphicon-time\"></span>";
-  var stat = ongoing;
-  $(".scavengerhunt-table > tbody:last").append('<tr><td>' + name + '</td><td>' + stat + '</td></tr>');
-}
 
 
 // Page Handlers
