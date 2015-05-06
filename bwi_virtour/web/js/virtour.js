@@ -163,6 +163,24 @@ function subscribePoseListener(ros) {
   });
 }
 
+function subscribeScavengerHuntListener(ros) {
+  var listener = new ROSLIB.Topic({
+    ros : ros,
+    name : '/scav_hunt_status',
+    messageType : 'bwi_scavenger/ScavStatus'
+  });
+  log("Added scavenger hunt listener");
+
+  listener.subscribe(function(msg) {
+    updateScavengerHuntStatus(msg);
+  });
+}
+
+function updateScavengerHuntStatus(msg) {
+  log("updated scavengerHuntStatus");
+  log(msg);
+}
+
 function updatePosition(x, y){
   log("robot.x = " + x + " robot.y = " + y);
 //  x = 0 - x;
@@ -411,6 +429,11 @@ function hideControls() {
 function viewScavengerHunt() {
   log("view scavenger hunt");
   $(".scavengerhunt-modal").modal();
+  var name = "More hunt";
+  var done = "Done <span class=\"glyphicon glyphicon-ok\"></span>";
+  var ongoing = "Ongoing <span class=\"glyphicon glyphicon-time\"></span>";
+  var stat = ongoing;
+  $(".scavengerhunt-table > tbody:last").append('<tr><td>' + name + '</td><td>' + stat + '</td></tr>');
 }
 
 
