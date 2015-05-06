@@ -530,6 +530,11 @@ $(".robot").click(function() {
   // get topics
   getTopics();
 
+  // enable or disable scavenger hunt
+  if (!topicAvailable("/scav_hunt_status")) {
+    $(".scavengerHunt").hide();
+  }
+
   // set up topic for controlling servo
   servo1Cmd = new ROSLIB.Topic({
     ros : segbot.ros,
@@ -603,10 +608,6 @@ $(".robot").click(function() {
   // enable or disable servos
   servosEnabled = topicAvailable("/servo0_status") && topicAvailable("/servo1_status");
 
-  // enable or disable scavenger hunt
-  if (!topicAvailable("/scav_hunt_status")) {
-    $(".scavengerHunt").hide();
-  }
 
   // set up video streaming
   var videoTopic = "";
