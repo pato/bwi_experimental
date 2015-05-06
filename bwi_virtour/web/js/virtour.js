@@ -246,12 +246,12 @@ function publishTopic(ros) {
 
 function rotateLeft() {
   log("Rotate left");
-  requestRotate(-1);
+  requestRotate(-0.2);
 }
 
 function rotateRight() {
   log("Rotate right");
-  requestRotate(1);
+  requestRotate(0.2);
 }
 
 function turnLeft() {
