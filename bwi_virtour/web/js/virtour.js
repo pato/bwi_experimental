@@ -202,6 +202,7 @@ function updateScavengerHuntStatus(msg) {
       case 3:
         stat = TODO;break;
     }
+    $(".scavengerhunt-table tbody").html("");
     $(".scavengerhunt-table > tbody:last").append('<tr><td>' + name + '</td><td>' + stat + '</td></tr>');
   }
 }
@@ -519,6 +520,16 @@ $(".robot").click(function() {
   // set up title
   $(".controllingText").text("Viewing " + botname);
 
+  // set up service client for getting list of topics 
+  topicsClient = new ROSLIB.Service({
+    ros : segbot.ros,
+    name : '/rosapi/topics',
+    serviceType : 'rosapi/Topics'
+  });
+
+  // get topics
+  getTopics();
+
   // set up topic for controlling servo
   servo1Cmd = new ROSLIB.Topic({
     ros : segbot.ros,
@@ -566,13 +577,6 @@ $(".robot").click(function() {
     serviceType : 'bwi_virtour/GetTourState'
   });
 
-  // set up service client for getting list of topics 
-  topicsClient = new ROSLIB.Service({
-    ros : segbot.ros,
-    name : '/rosapi/topics',
-    serviceType : 'rosapi/Topics'
-  });
-
   // set up service client for pinging the tour
   pingTourClient = new ROSLIB.Service({
     ros : segbot.ros,
@@ -596,11 +600,13 @@ $(".robot").click(function() {
   // tour setup
   getTourState();
 
-  // get topics
-  getTopics();
-
   // enable or disable servos
   servosEnabled = topicAvailable("/servo0_status") && topicAvailable("/servo1_status");
+
+  // enable or disable scavenger hunt
+  if (!topicAvailable("/scav_hunt_status")) {
+    $(".scavengerHunt").hide();
+  }
 
   // set up video streaming
   var videoTopic = "";
