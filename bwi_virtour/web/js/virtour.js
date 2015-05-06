@@ -30,6 +30,7 @@ var tourState = { tourAllowed: false, tourInProgress: false, tourDuration: 0,
   tourStartTime: 0, lastPingTime: 0};
 var tourStateFresh = false;
 var topics = null;
+var servosEnabled = false;
 
 // Scavenger Hunt Statuses
 var FINISHED = "<span class=\"glyphicon glyphicon-ok\"></span> Done";
@@ -449,7 +450,9 @@ function leaveTour() {
 }
 
 function showControls() {
-  $(".servoControl").fadeIn();
+  if (servosEnabled) {
+    $(".servoControl").fadeIn();
+  }
   $(".rotateControl").fadeIn();
   $(".locationForm").fadeIn();
   $(".navigateBtn").fadeIn();
@@ -601,6 +604,9 @@ $(".robot").click(function() {
 
   // get topics
   getTopics();
+
+  // enable or disable servos
+  servosEnabled = topicAvailable("/servo0_status") && topicAvailable("/servo1_status");
 
   // set up video streaming
   var videoTopic = "";
