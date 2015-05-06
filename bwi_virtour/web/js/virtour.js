@@ -30,9 +30,9 @@ var tourState = { tourAllowed: false, tourInProgress: false, tourDuration: 0,
 var tourStateFresh = false;
 
 // Scavenger Hunt Statuses
-var FINISHED = "Done <span class=\"glyphicon glyphicon-ok\"></span>";
-var ONGOING  = "Ongoing <span class=\"glyphicon glyphicon-time\"></span>";
-var TODO     = "To do <span class=\"glyphicon glyphicon-calendar\"></span>";
+var FINISHED = "<span class=\"glyphicon glyphicon-ok\"></span> Done";
+var ONGOING  = "<span class=\"glyphicon glyphicon-time\"></span> Ongoing ";
+var TODO     = "<span class=\"glyphicon glyphicon-calendar\"></span> To do";
 
 // Map conversions
 var map_res = 0.05;
