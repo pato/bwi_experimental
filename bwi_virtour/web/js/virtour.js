@@ -188,13 +188,10 @@ function viewScavengerHunt() {
 
 function updateScavengerHuntStatus(msg) {
   log("updated scavengerHuntStatus");
-  log(msg);
-  var names = ['Find someone wearing blue shirt', 'Eat pizza', 'Find coffee cup'];
-  var statuses = [1, 3, 2];
   
-  for (var i = 0; i < names.length; i++) {
-    name = names[i];
-    switch (statuses[i]) {
+  for (var i = 0; i < msg.names.length; i++) {
+    name = msg.names[i];
+    switch (msg.statuses[i]) {
       case 1:
         stat = ONGOING;break;
       case 2:
@@ -498,6 +495,8 @@ $(".robot").click(function() {
   log("Subscribing listeners");
   subscribeListener(segbot.ros);
   subscribePoseListener(segbot.ros);
+  subscribePoseListener(segbot.ros);
+  subscribeScavengerHuntListener(segbot.ros);
 
   // hide the intro stuff
   $(".intro").fadeOut();
@@ -511,9 +510,9 @@ $(".robot").click(function() {
 
   // set up video streaming
   var videoTopic = "";
-  if (botname == "calculon") {
+  if (botname == "roberto") {
     videoTopic = "/camera/image_raw";
-    videoTopic += "?invert";
+    //videoTopic += "?invert";
     log("Using /camera/image_raw for video source");
   } else {
     videoTopic = "/nav_kinect/rgb/image_raw";
