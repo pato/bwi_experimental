@@ -353,7 +353,6 @@ function getTopics() {
   var request = new ROSLIB.ServiceRequest();
   topicsClient.callService(request, function(result) {
     topics = result.topics;
-    log(topics);
   });
 }
 
@@ -510,11 +509,8 @@ $(".robot").click(function() {
   log("Subscribing listeners");
   subscribeListener(segbot.ros);
   subscribePoseListener(segbot.ros);
-  subscribePoseListener(segbot.ros);
   subscribeScavengerHuntListener(segbot.ros);
 
-  // get topics
-  getTopics();
 
   // hide the intro stuff
   $(".intro").fadeOut();
@@ -525,21 +521,6 @@ $(".robot").click(function() {
 
   // set up title
   $(".controllingText").text("Viewing " + botname);
-
-  // set up video streaming
-  var videoTopic = "";
-  if (topicAvailable("/camera/image_raw")) {
-    videoTopic = "/camera/image_raw";
-    //videoTopic += "?invert";
-    log("Using /camera/image_raw for video source");
-  } else {
-    videoTopic = "/nav_kinect/rgb/image_raw";
-    log("Using /nav_kinect/rgb/image_raw for video source");
-  }
-  var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
-                      + "/stream?topic=" + videoTopic;
-  log("Loading video from: " + videoSource);
-  $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
 
   // set up topic for controlling servo
   servo1Cmd = new ROSLIB.Topic({
@@ -617,6 +598,24 @@ $(".robot").click(function() {
 
   // tour setup
   getTourState();
+
+  // get topics
+  getTopics();
+
+  // set up video streaming
+  var videoTopic = "";
+  if (topicAvailable("/camera/image_raw")) {
+    videoTopic = "/camera/image_raw";
+    //videoTopic += "?invert";
+    log("Using /camera/image_raw for video source");
+  } else {
+    videoTopic = "/nav_kinect/rgb/image_raw";
+    log("Using /nav_kinect/rgb/image_raw for video source");
+  }
+  var videoSource = "http://" + segbot.ipaddr + ":" + segbot.mjpegserverport
+                      + "/stream?topic=" + videoTopic;
+  log("Loading video from: " + videoSource);
+  $(".controllingIframe").append("<img width=\"100%\" height=\"800\" src=\"" + videoSource + "\">");
 
 });
 
