@@ -20,9 +20,12 @@ On robot:
 
 1. Set up smallDNS
 
+2. Change `broadcastTour.sh` to email correct people and with correct url
+
 2. Bring up robot (eg: `roslaunch bwi_launch segbot_v2.launch`)
 
 3. Launch `roslaunch bwi_virtour virtour.launch`
+
 
 On server:
 
