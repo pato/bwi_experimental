@@ -1,7 +1,6 @@
 Imperative:
 
 Stretch goals:
-* Add detection of which robots are actually active
 
 Non-goals:
 * Generate identity from ip address instead of UUID
@@ -21,3 +20,5 @@ Done:
 * Implement rotate
 * Fix default parameter bug in chrome
 * Add scavenger hunt information screen
+* Add detection of which robots are actually active
+* Email list when tour is active
