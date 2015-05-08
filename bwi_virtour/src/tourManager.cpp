@@ -123,10 +123,13 @@ bool authenticate(bwi_virtour::Authenticate::Request &req,
 }
 
 int main(int argc, char **argv){
-  tm = new TourManager(true);
-
   ros::init(argc, argv, "tourManager");
   ros::NodeHandle n;
+
+  /* Create tour manager */
+  bool tourEnabled;
+  n.param("tourEnabled", tourEnabled, false);
+  tm = new TourManager(tourEnabled);
 
   /* Advertise services */
   ros::ServiceServer request_service = n.advertiseService("tourManager/request_tour", requestTour);
