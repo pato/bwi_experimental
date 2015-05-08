@@ -24,7 +24,9 @@ On robot:
 
 2. Bring up robot (eg: `roslaunch bwi_launch segbot_v2.launch`)
 
-3. Launch `roslaunch bwi_virtour virtour.launch`
+3. Launch `roslaunch bwi_virtour virtour_passive.launch`
+
+4. Launch `roslaunch bwi_virtour virtour_active-[cameratype].launch`
 
 
 On server:
@@ -32,6 +34,23 @@ On server:
 1. Link or copy the `web` folder to `/var/www`
 
 2. Modify `index.html` to add robot
+
+## Launch Files
+
+There are two types of launch files, passive and active, each with two variants.
+
+The passive launch files brings up the tour manager, rosbridge and mjpeg
+servers. Allows people to view the robot's position, camera feed, and scavenger
+hunt status.
+
+The active launch files (requires the passive one to be running as well),
+allows people to become tour leaders, control rotation, request navigation,
+and move the camera servos (if available).
+
+The kinect variant is for robots that only have the kinect as camera feed.
+
+The servocam variant is for the robots that pointgrey cameras on 2-axis servos.
+
 
 ## ROS Nodes
 
