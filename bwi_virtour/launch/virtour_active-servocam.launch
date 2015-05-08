@@ -1,5 +1,4 @@
 <launch>
-  <include file="$(find segbot_sensors)/launch/ptgrey/usbcam.launch"></include>
   <include file="$(find bwi_kr_execution)/launch/bwi_kr_execution.launch"></include>
   <node name="polulu_maestro_node" pkg="pololu_maestro" type="polulu_maestro_node">
     <param name="~num_servos" value="2" />
