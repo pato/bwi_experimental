@@ -39,6 +39,10 @@ On server:
 
 There are two types of launch files, passive and active, each with two variants.
 
+Before executing the virtour launch files make sure that the segbot launch files
+were executed (either `segbot_v1.launch` or `segbot_v2.launch`). And for the
+active variants make sure that the `kr_execution` node is up.
+
 The passive launch files brings up the tour manager, rosbridge and mjpeg
 servers. Allows people to view the robot's position, camera feed, and scavenger
 hunt status.
