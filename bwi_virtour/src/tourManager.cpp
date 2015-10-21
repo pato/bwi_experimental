@@ -130,6 +130,7 @@ int main(int argc, char **argv){
   //bool tourEnabled;
   int tourEnabled;
   n.param<int>("tourEnabled", tourEnabled, 0);
+  ROS_INFO("tourEnabled: %d\n", tourEnabled);
   tm = new TourManager(tourEnabled == 1);
 
   /* Advertise services */
