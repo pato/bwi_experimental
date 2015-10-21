@@ -6,7 +6,7 @@
     <param name="__image_transport" value="compressed" />
   </node>
 
-  <node name="virtour_manager" pkg="bwi_virtour" type="virtour_manager">
+  <node name="tour_manager" pkg="bwi_virtour" type="tour_manager">
     <param name="tourEnabled" value="True" />
   </node>
 
