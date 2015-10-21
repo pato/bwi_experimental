@@ -41,4 +41,7 @@
   <!-- launch the sound play node -->
   <node name="soundplay" pkg="sound_play" type="soundplay_node.py" />
 
+  <!-- launch the bwi_kr_execution_simulator -->
+  <include file="$(find bwi_kr_execution)/launch/bwi_kr_execution_simulation.launch"> </include>
+
 </launch>
