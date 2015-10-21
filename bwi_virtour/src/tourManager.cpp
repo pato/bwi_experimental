@@ -127,9 +127,10 @@ int main(int argc, char **argv){
   ros::NodeHandle n;
 
   /* Create tour manager */
-  bool tourEnabled;
-  n.param<bool>("tourEnabled", tourEnabled, false);
-  tm = new TourManager(tourEnabled);
+  //bool tourEnabled;
+  int tourEnabled;
+  n.param<int>("tourEnabled", tourEnabled, 0);
+  tm = new TourManager(tourEnabled == 1);
 
   /* Advertise services */
   ros::ServiceServer request_service = n.advertiseService("tourManager/request_tour", requestTour);
