@@ -128,7 +128,7 @@ int main(int argc, char **argv){
 
   /* Create tour manager */
   bool tourEnabled;
-  n.param("tourEnabled", tourEnabled, false);
+  n.param<bool>("tourEnabled", tourEnabled, false);
   tm = new TourManager(tourEnabled);
 
   /* Advertise services */
