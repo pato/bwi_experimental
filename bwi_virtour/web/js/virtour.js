@@ -312,7 +312,7 @@ function sendGoal(pose) {
 }
 
 function cancelLocation() {
-  var request = new ROSLIB.ServiceRequest({ location: locationStr, user: identity, cancel: true});
+  var request = new ROSLIB.ServiceRequest({ location: "", user: identity, cancel: true});
   goToLocationClient.callService(request, function(result) {
     log('Result for cancel location service call on : ' + result.result);
     if (result.result == 1) { //success
