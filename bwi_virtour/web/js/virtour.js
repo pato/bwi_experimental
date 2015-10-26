@@ -311,6 +311,23 @@ function sendGoal(pose) {
   goal.send();
 }
 
+function cancelLocation() {
+  var request = new ROSLIB.ServiceRequest({ location: locationStr, user: identity, cancel: true});
+  goToLocationClient.callService(request, function(result) {
+    log('Result for cancel location service call on : ' + result.result);
+    if (result.result == 1) { //success
+      alert("success");
+    } else if (result.result == -1) { // terminated
+      alert("terminated");
+    } else if (result.result == -2) { // preempted
+      alert("preempted");
+    } else if (result.result == -3) { // aborted
+      alert("aborted");
+    } else {
+    }
+  });
+}
+
 function requestLocation(locationStr) {
   log('requesting goToLocation: ' + locationStr);
   var request = new ROSLIB.ServiceRequest({ location: locationStr, user: identity});
