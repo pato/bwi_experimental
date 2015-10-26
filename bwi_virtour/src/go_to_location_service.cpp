@@ -29,7 +29,9 @@ bool goToLocation(bwi_virtour::GoToLocation::Request &req,
   }
 
   if (req.cancel == true) {
+    ROS_INFO("Cancelling all goals");
     client->cancelAllGoals();
+    res.result = 2;
     return true;
   }
 
