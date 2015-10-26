@@ -1,4 +1,5 @@
 string location
 string user
+bool   cancel
 ---
 int32 result

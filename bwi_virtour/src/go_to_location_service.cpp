@@ -28,6 +28,11 @@ bool goToLocation(bwi_virtour::GoToLocation::Request &req,
     }
   }
 
+  if (req.cancel == true) {
+    client->cancelAllGoals();
+    return;
+  }
+
   ROS_INFO("waiting for server");
   client->waitForServer();
   
